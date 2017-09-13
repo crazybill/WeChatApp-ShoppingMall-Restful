@@ -55,9 +55,10 @@ public class WeChat {
      * @throws WeChatException
      */
     public WeChatToken getWeChatToken() throws WeChatException {
+        if (StringUtils.isEmpty(appId) || StringUtils.isEmpty(secret))
+            throw new WeChatException("未成功初始化WeChat");
         
         WeChatToken weChatToken = null;
-        
         // 无法连接Redis数据库时的情况
         if (getValueOperations() == null) {
             String errMsg = "无法获得Redis的操作对象";
