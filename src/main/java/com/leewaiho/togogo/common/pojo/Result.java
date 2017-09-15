@@ -6,8 +6,8 @@ package com.leewaiho.togogo.common.pojo;
  * @Date 2017/9/13
  */
 public class Result<T> {
-    private String message;
-    private boolean success;
+    private String message = "操作成功";
+    private boolean success = true;
     private T data;
     
     public Result() {
@@ -43,6 +43,12 @@ public class Result<T> {
         this.data = data;
     }
     
+    public static Result success(Object data) {
+        Result result = new Result<>();
+        result.setData(data);
+        return result;
+    }
+    
     @Override
     public String toString() {
         return "Result{" +
@@ -51,4 +57,5 @@ public class Result<T> {
                        ", data=" + data +
                        '}';
     }
+    
 }
