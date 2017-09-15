@@ -1,43 +1,24 @@
-package com.leewaiho.togogo.module.sys.model;
+package com.leewaiho.togogo.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.io.Serializable;
-
-/**
- * @Author leewaiho
- * @Email 791783391@qq.com
- * @Date 2017/9/15
- */
-@Entity
-@Table(name = "T_S_USER")
-public class TSUser implements Serializable {
-    
-    @Id
+public class TSUser {
     private String id;
     
     private String username;
     
     private String password;
     
-    @Column(name = "mobile_phone")
     private String mobilePhone;
     
     private String email;
     
-    public TSUser() {
-    }
+    private String openId;
     
     public String getId() {
         return id;
     }
     
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
     
     public String getUsername() {
@@ -45,7 +26,7 @@ public class TSUser implements Serializable {
     }
     
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
     
     public String getPassword() {
@@ -53,7 +34,7 @@ public class TSUser implements Serializable {
     }
     
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
     
     public String getMobilePhone() {
@@ -61,7 +42,7 @@ public class TSUser implements Serializable {
     }
     
     public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
+        this.mobilePhone = mobilePhone == null ? null : mobilePhone.trim();
     }
     
     public String getEmail() {
@@ -69,6 +50,14 @@ public class TSUser implements Serializable {
     }
     
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email == null ? null : email.trim();
+    }
+    
+    public String getOpenId() {
+        return openId;
+    }
+    
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 }

@@ -1,39 +1,22 @@
-package com.leewaiho.togogo.module.sys.model;
+package com.leewaiho.togogo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 import java.util.Date;
 
-/**
- * @Author leewaiho
- * @Email 791783391@qq.com
- * @Date 2017/9/15
- */
-@Entity
-@Table(name = "T_S_IMG")
 public class TSImg {
-    @Id
     private String id;
-    
+
     private String url;
     
-    @Column(name = "create_time")
-    private Date createTime = new Date();
-    
-    @Column(name = "create_by")
+    private Date createTime;
+
     private String createBy;
-    
-    public TSImg() {
-    }
-    
+
     public String getId() {
         return id;
     }
-    
+
     public void setId(String id) {
-        this.id = id;
+        this.id = id == null ? null : id.trim();
     }
     
     public String getUrl() {
@@ -41,7 +24,7 @@ public class TSImg {
     }
     
     public void setUrl(String url) {
-        this.url = url;
+        this.url = url == null ? null : url.trim();
     }
     
     public Date getCreateTime() {
@@ -57,6 +40,6 @@ public class TSImg {
     }
     
     public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+        this.createBy = createBy == null ? null : createBy.trim();
     }
 }
