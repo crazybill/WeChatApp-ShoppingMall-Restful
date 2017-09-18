@@ -1,9 +1,9 @@
 package com.leewaiho.togogo.module.sys.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -17,13 +17,11 @@ import javax.persistence.Table;
 @Table(name = "T_B_USER")
 public class TSUser extends BaseModel {
     
-    @Id
-    private String id;
-    
     private String openId;
     
     private String username;
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
     private byte gender = 2; // 0:女 1:男 2:未知
@@ -33,14 +31,6 @@ public class TSUser extends BaseModel {
     private String email;
     
     public TSUser() {
-    }
-    
-    public String getId() {
-        return id;
-    }
-    
-    public void setId(String id) {
-        this.id = id;
     }
     
     public String getOpenId() {
