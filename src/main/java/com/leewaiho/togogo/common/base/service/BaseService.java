@@ -1,4 +1,4 @@
-package com.leewaiho.togogo.common.service;
+package com.leewaiho.togogo.common.base.service;
 
 import java.io.Serializable;
 import java.util.List;

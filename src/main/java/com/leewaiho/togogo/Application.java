@@ -1,7 +1,6 @@
 package com.leewaiho.togogo;
 
 import com.leewaiho.togogo.module.wechat.WeChat;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -11,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
 @ServletComponentScan
-@MapperScan("com.leewaiho.togogo.mapper")
 public class Application {
 
 	public static void main(String[] args) {

@@ -1,13 +1,12 @@
 package com.leewaiho.togogo.module.sys.service.impl;
 
-import com.leewaiho.togogo.mapper.TSUserMapper;
-import com.leewaiho.togogo.model.TSUser;
-import com.leewaiho.togogo.model.TSUserExample;
+import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
+import com.leewaiho.togogo.module.sys.model.TSUser;
+import com.leewaiho.togogo.module.sys.repository.UserRepository;
 import com.leewaiho.togogo.module.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 /**
  * Author leewaiho
@@ -16,19 +15,14 @@ import java.util.List;
  * Project togogo-shixun
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<TSUser, String> implements UserService {
     
     @Autowired
-    private TSUserMapper userMapper;
+    private UserRepository userRepository;
     
     @Override
     public TSUser findByUsername(String username) {
-        TSUserExample example = new TSUserExample();
-        example.createCriteria().andUsernameEqualTo(username);
-        List<TSUser> userList = userMapper.selectByExample(example);
-        if (userList == null || userList.isEmpty()) {
-            return null;
-        }
-        return userList.get(0);
+        return userRepository.findByUsername(username);
     }
+    
 }
