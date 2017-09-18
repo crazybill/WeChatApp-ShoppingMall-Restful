@@ -1,9 +1,10 @@
 package com.leewaiho.togogo.module.wechat;
 
+import com.alibaba.druid.util.StringUtils;
 import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.exception.WeChatException;
-import com.leewaiho.togogo.common.util.StringUtils;
 import com.leewaiho.togogo.common.util.TimeUtil;
+import com.leewaiho.togogo.module.wechat.api.WeChatApi;
 import com.leewaiho.togogo.module.wechat.pojo.WeChatToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,7 @@ import java.util.Map;
  * @Date 2017/8/26
  */
 
-public class WeChat {
+public class WeChat implements WeChatApi {
     
     private static final Logger log = LoggerFactory.getLogger(WeChat.class);
     private String appId;
@@ -239,4 +240,29 @@ public class WeChat {
         return redisTemplate.opsForValue();
     }
     
+    /**
+     * https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    public Object code2Session(String code) {
+        checkInitialized();
+        String uriString = UriComponentsBuilder.fromHttpUrl("https://api.weixin.qq.com/sns/jscode2session")
+                                   .queryParam("appid", this.appId)
+                                   .queryParam("secret", this.secret)
+                                   .queryParam("js_code", code)
+                                   .queryParam("grant_type", "authorization_code")
+                                   .toUriString();
+        return uriString;
+    }
+    
+    /**
+     * 确认微信已经初始化
+     */
+    private void checkInitialized() {
+        if (StringUtils.isEmpty(this.appId) || StringUtils.isEmpty(this.secret))
+            throw new WeChatException("微信初始化错误");
+    }
 }
