@@ -12,4 +12,6 @@ public interface BaseService<T, ID extends Serializable> {
     
     List<T> findAll();
     
+    T save(T t);
+    
 }

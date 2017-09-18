@@ -43,7 +43,7 @@ public class Result<T> {
         this.data = data;
     }
     
-    public static Result success(Object data) {
+    public static <T> Result<T> success(T data) {
         Result result = new Result<>();
         result.setData(data);
         return result;

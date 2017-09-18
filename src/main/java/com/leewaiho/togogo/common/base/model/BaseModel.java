@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.common.base.model;
 
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
@@ -15,13 +16,24 @@ public class BaseModel implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
-    private Date createTime;
+    @Id
+    private String id;
     
-    private Date updateTime;
+    private Date createTime = new Date();
+    
+    private Date updateTime = new Date();
     
     private int status = 1; // 1:正常 0:禁用
     
     public BaseModel() {
+    }
+    
+    public String getId() {
+        return id;
+    }
+    
+    public void setId(String id) {
+        this.id = id;
     }
     
     public Date getCreateTime() {
