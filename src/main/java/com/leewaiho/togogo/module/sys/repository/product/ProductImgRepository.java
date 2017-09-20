@@ -1,7 +1,7 @@
-package com.leewaiho.togogo.module.sys.repository;
+package com.leewaiho.togogo.module.sys.repository.product;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
-import com.leewaiho.togogo.module.sys.model.TBTagOption;
+import com.leewaiho.togogo.module.sys.model.product.TBProductImg;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * Project togogo-shixun
  */
 @Repository
-public interface TagOptionRepository extends BaseRepository<TBTagOption> {
+public interface ProductImgRepository extends BaseRepository<TBProductImg> {
 }

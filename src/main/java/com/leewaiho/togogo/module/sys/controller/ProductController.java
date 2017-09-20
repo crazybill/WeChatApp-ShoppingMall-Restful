@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sys.controller;
 
 import com.leewaiho.togogo.common.base.controller.BaseController;
-import com.leewaiho.togogo.module.sys.model.tag.TBTag;
+import com.leewaiho.togogo.module.sys.model.product.TBProduct;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +14,6 @@ import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PAT
  * Project togogo-shixun
  */
 @RestController
-@RequestMapping(value = BASE_PATH + "/tags")
-public class TagController extends BaseController<TBTag> {
+@RequestMapping(BASE_PATH + "/products")
+public class ProductController extends BaseController<TBProduct> {
 }

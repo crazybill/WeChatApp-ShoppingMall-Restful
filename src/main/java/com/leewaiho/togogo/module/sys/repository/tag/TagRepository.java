@@ -1,7 +1,7 @@
-package com.leewaiho.togogo.module.sys.repository;
+package com.leewaiho.togogo.module.sys.repository.tag;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
-import com.leewaiho.togogo.module.sys.model.TBTag;
+import com.leewaiho.togogo.module.sys.model.tag.TBTag;
 import org.springframework.stereotype.Repository;
 
 /**

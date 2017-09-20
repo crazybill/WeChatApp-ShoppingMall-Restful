@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sys.service;
 
 import com.leewaiho.togogo.common.base.service.BaseService;
-import com.leewaiho.togogo.module.sys.model.image.TSImage;
+import com.leewaiho.togogo.module.sys.model.product.TBProduct;
 
 /**
  * Author leewaiho
@@ -9,6 +9,5 @@ import com.leewaiho.togogo.module.sys.model.image.TSImage;
  * Date 2017/9/20
  * Project togogo-shixun
  */
-
-public interface ImageService extends BaseService<TSImage> {
+public interface ProductService extends BaseService<TBProduct> {
 }

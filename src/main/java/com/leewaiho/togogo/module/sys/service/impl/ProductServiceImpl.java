@@ -1,8 +1,8 @@
 package com.leewaiho.togogo.module.sys.service.impl;
 
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
-import com.leewaiho.togogo.module.sys.model.tag.TBTag;
-import com.leewaiho.togogo.module.sys.service.TagService;
+import com.leewaiho.togogo.module.sys.model.product.TBProduct;
+import com.leewaiho.togogo.module.sys.service.ProductService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  * Project togogo-shixun
  */
 @Service
-public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService {
+public class ProductServiceImpl extends BaseServiceImpl<TBProduct> implements ProductService {
 }

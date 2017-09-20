@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sys.service.impl;
 
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
-import com.leewaiho.togogo.module.sys.model.TSImage;
+import com.leewaiho.togogo.module.sys.model.image.TSImage;
 import com.leewaiho.togogo.module.sys.service.ImageService;
 import org.springframework.stereotype.Service;
 

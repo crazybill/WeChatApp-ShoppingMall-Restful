@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sys.controller;
 
 import com.leewaiho.togogo.common.base.controller.BaseController;
-import com.leewaiho.togogo.module.sys.model.TSImage;
+import com.leewaiho.togogo.module.sys.model.image.TSImage;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

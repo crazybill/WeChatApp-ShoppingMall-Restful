@@ -1,8 +1,8 @@
 package com.leewaiho.togogo.module.sys.service.impl;
 
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
-import com.leewaiho.togogo.module.sys.model.TSUser;
-import com.leewaiho.togogo.module.sys.repository.UserRepository;
+import com.leewaiho.togogo.module.sys.model.user.TSUser;
+import com.leewaiho.togogo.module.sys.repository.user.UserRepository;
 import com.leewaiho.togogo.module.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

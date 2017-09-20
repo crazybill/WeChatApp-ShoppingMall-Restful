@@ -1,7 +1,7 @@
-package com.leewaiho.togogo.module.sys.repository;
+package com.leewaiho.togogo.module.sys.repository.user;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
-import com.leewaiho.togogo.module.sys.model.TSUser;
+import com.leewaiho.togogo.module.sys.model.user.TSUser;
 import org.springframework.stereotype.Repository;
 
 /**

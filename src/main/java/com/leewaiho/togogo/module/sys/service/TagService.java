@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sys.service;
 
 import com.leewaiho.togogo.common.base.service.BaseService;
-import com.leewaiho.togogo.module.sys.model.TBTag;
+import com.leewaiho.togogo.module.sys.model.tag.TBTag;
 
 /**
  * Author leewaiho

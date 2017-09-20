@@ -2,7 +2,7 @@ package com.leewaiho.togogo.module.sys.service;
 
 
 import com.leewaiho.togogo.common.base.service.BaseService;
-import com.leewaiho.togogo.module.sys.model.TSUser;
+import com.leewaiho.togogo.module.sys.model.user.TSUser;
 
 /**
  * @Author leewaiho

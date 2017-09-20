@@ -1,7 +1,7 @@
-package com.leewaiho.togogo.module.sys.repository;
+package com.leewaiho.togogo.module.sys.repository.image;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
-import com.leewaiho.togogo.module.sys.model.TSImage;
+import com.leewaiho.togogo.module.sys.model.image.TSImage;
 import org.springframework.stereotype.Repository;
 
 /**

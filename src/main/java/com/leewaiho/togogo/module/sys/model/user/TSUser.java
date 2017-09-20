@@ -1,4 +1,4 @@
-package com.leewaiho.togogo.module.sys.model;
+package com.leewaiho.togogo.module.sys.model.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.leewaiho.togogo.common.base.model.BaseModel;

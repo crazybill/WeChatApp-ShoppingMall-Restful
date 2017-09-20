@@ -1,4 +1,4 @@
-package com.leewaiho.togogo.module.sys.model;
+package com.leewaiho.togogo.module.sys.model.image;
 
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
