@@ -14,7 +14,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "T_B_USER")
+@Table(name = "T_S_USER")
 public class TSUser extends BaseModel {
     
     private String openId;
@@ -24,7 +24,7 @@ public class TSUser extends BaseModel {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
-    private byte gender = 2; // 0:女 1:男 2:未知
+    private byte gender = Gender.MALE; // 0:女 1:男 2:未知
     
     private String mobilePhone;
     
@@ -90,5 +90,10 @@ public class TSUser extends BaseModel {
                        ", mobilePhone='" + mobilePhone + '\'' +
                        ", email='" + email + '\'' +
                        "} " + super.toString();
+    }
+    
+    public class Gender {
+        public static final int FEMALE = 0; // 女性
+        public static final int MALE = 1; // 男性
     }
 }
