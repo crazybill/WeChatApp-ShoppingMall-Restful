@@ -63,8 +63,6 @@ public class TBTagOption extends BaseModel implements Serializable {
     
     public void setDefault(boolean aDefault) {
         isDefault = aDefault;
-        
-        
     }
     
     public TBTag getTag() {
