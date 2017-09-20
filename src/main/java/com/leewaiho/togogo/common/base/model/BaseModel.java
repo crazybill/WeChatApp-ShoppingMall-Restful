@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @MappedSuperclass
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class BaseModel implements Serializable{
+public abstract class BaseModel implements Serializable{
     
     private static final long serialVersionUID = 1L;
     
@@ -26,7 +26,7 @@ public class BaseModel implements Serializable{
     
     private Date updateTime = new Date();
     
-    private int status = 1; // 1:正常 0:禁用
+    private int status = Status.NORMAL; // 1:正常 0:禁用
     
     public BaseModel() {
     }
@@ -71,5 +71,11 @@ public class BaseModel implements Serializable{
                        ", updateTime=" + updateTime +
                        ", status=" + status +
                        '}';
+    }
+    
+    public class Status{
+        public static final int NORMAL = 1; // 正常
+        public static final int DISABLE = -1; // 禁用 未启用 未激活
+        public static final int LOCKED = 0; // 锁定
     }
 }

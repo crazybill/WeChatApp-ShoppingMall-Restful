@@ -8,7 +8,6 @@ import com.leewaiho.togogo.common.util.MyBeanUtil;
 import com.leewaiho.togogo.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +23,7 @@ import java.util.List;
  * Date 2017/9/18
  * Project togogo-shixun
  */
-public class BaseServiceImpl<T extends BaseModel, D extends Serializable> implements BaseService<T, D> {
+public abstract class BaseServiceImpl<T extends BaseModel, D extends Serializable> implements BaseService<T, D> {
     
     protected final Logger log = LoggerFactory.getLogger(getClass().getName());
     
