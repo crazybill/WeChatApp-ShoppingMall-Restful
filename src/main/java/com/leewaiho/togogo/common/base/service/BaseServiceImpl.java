@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -23,15 +22,15 @@ import java.util.List;
  * Date 2017/9/18
  * Project togogo-shixun
  */
-public abstract class BaseServiceImpl<T extends BaseModel, D extends Serializable> implements BaseService<T, D> {
+public abstract class BaseServiceImpl<T extends BaseModel> implements BaseService<T> {
     
     protected final Logger log = LoggerFactory.getLogger(getClass().getName());
     
     @Autowired
-    private BaseRepository<T, D> repository;
+    private BaseRepository<T> repository;
     
     @Override
-    public T findById(D id) {
+    public T findById(String id) {
         return repository.getOne(id);
     }
     
@@ -55,7 +54,7 @@ public abstract class BaseServiceImpl<T extends BaseModel, D extends Serializabl
                 t.setId(id);
                 log.info("新增操作 ID: {}, Bean: {}", id, className);
             } else {
-                T dest = repository.getOne((D) id);
+                T dest = repository.getOne(id);
                 log.info(dest.toString());
                 MyBeanUtil.copyProperties(t, dest);
                 t = dest;
@@ -70,7 +69,7 @@ public abstract class BaseServiceImpl<T extends BaseModel, D extends Serializabl
     }
     
     @Override
-    public void delete(D id) {
+    public void delete(String id) {
         repository.delete(id);
         
     }

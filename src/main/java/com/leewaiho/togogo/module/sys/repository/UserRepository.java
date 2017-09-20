@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
  * Project togogo-shixun
  */
 @Repository
-public interface UserRepository extends BaseRepository<TSUser, String> {
+public interface UserRepository extends BaseRepository<TSUser> {
     
     TSUser findByUsername(String username);
 }

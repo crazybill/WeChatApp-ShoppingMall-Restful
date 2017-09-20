@@ -14,6 +14,6 @@ import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PAT
  */
 @RestController
 @RequestMapping(BASE_PATH + "/users")
-public class UserController extends BaseController<TSUser, String> {
+public class UserController extends BaseController<TSUser> {
 
 }

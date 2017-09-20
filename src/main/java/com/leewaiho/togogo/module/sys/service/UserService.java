@@ -9,7 +9,7 @@ import com.leewaiho.togogo.module.sys.model.TSUser;
  * @Email 791783391@qq.com
  * @Date 2017/9/15
  */
-public interface UserService extends BaseService<TSUser, String> {
+public interface UserService extends BaseService<TSUser> {
     
     TSUser findByUsername(String username);
     

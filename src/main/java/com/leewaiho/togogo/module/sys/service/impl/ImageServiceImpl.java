@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  * Project togogo-shixun
  */
 @Service
-public class ImageServiceImpl extends BaseServiceImpl<TSImage, String> implements ImageService {
+public class ImageServiceImpl extends BaseServiceImpl<TSImage> implements ImageService {
 }

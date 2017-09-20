@@ -15,6 +15,6 @@ import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PAT
  */
 @RestController
 @RequestMapping(BASE_PATH + "/images")
-public class ImageController extends BaseController<TSImage, String> {
+public class ImageController extends BaseController<TSImage> {
     
 }

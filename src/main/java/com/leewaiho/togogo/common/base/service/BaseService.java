@@ -1,9 +1,9 @@
 package com.leewaiho.togogo.common.base.service;
 
+import com.leewaiho.togogo.common.base.model.BaseModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,9 +11,9 @@ import java.util.List;
  * @Email 791783391@qq.com
  * @Date 2017/9/15
  */
-public interface BaseService<T, D extends Serializable> {
+public interface BaseService<T extends BaseModel> {
     
-    T findById(D id);
+    T findById(String id);
     
     Page<T> findAll(Pageable pageable);
     
@@ -21,7 +21,7 @@ public interface BaseService<T, D extends Serializable> {
     
     T save(T t);
     
-    void delete(D id);
+    void delete(String id);
     
     void delete(T t);
     

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
  * Project togogo-shixun
  */
 @Service
-public class UserServiceImpl extends BaseServiceImpl<TSUser, String> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserService {
     
     @Autowired
     private UserRepository userRepository;

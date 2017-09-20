@@ -10,5 +10,5 @@ import com.leewaiho.togogo.module.sys.model.TSImage;
  * Project togogo-shixun
  */
 
-public interface ImageService extends BaseService<TSImage, String> {
+public interface ImageService extends BaseService<TSImage> {
 }

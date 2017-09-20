@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
  * Project togogo-shixun
  */
 @Repository
-public interface ImageRepository extends BaseRepository<TSImage, String> {
+public interface ImageRepository extends BaseRepository<TSImage> {
 }

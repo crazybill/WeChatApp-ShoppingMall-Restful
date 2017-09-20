@@ -1,9 +1,8 @@
 package com.leewaiho.togogo.common.base.repository;
 
+import com.leewaiho.togogo.common.base.model.BaseModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
-
-import java.io.Serializable;
 
 /**
  * Author leewaiho
@@ -12,5 +11,5 @@ import java.io.Serializable;
  * Project togogo-shixun
  */
 @NoRepositoryBean
-public interface BaseRepository<T, D extends Serializable> extends JpaRepository<T, D> {
+public interface BaseRepository<T extends BaseModel> extends JpaRepository<T, String> {
 }
