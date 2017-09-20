@@ -50,5 +50,12 @@ public class TBProduct extends BaseModel implements Serializable {
         this.description = description;
     }
     
-    
+    @Override
+    public String toString() {
+        return "TBProduct{" +
+                       "name='" + name + '\'' +
+                       ", basePrice=" + basePrice +
+                       ", description='" + description + '\'' +
+                       "} " + super.toString();
+    }
 }
