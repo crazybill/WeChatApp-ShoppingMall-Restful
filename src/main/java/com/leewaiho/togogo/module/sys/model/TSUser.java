@@ -80,4 +80,15 @@ public class TSUser extends BaseModel {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String toString() {
+        return "TSUser{" +
+                       "openId='" + openId + '\'' +
+                       ", username='" + username + '\'' +
+                       ", password='" + password + '\'' +
+                       ", gender=" + gender +
+                       ", mobilePhone='" + mobilePhone + '\'' +
+                       ", email='" + email + '\'' +
+                       "} " + super.toString();
+    }
 }

@@ -1,5 +1,7 @@
 package com.leewaiho.togogo.common.base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
@@ -12,6 +14,7 @@ import java.util.Date;
  * Project togogo-shixun
  */
 @MappedSuperclass
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BaseModel implements Serializable{
     
     private static final long serialVersionUID = 1L;
@@ -58,5 +61,15 @@ public class BaseModel implements Serializable{
     
     public void setStatus(int status) {
         this.status = status;
+    }
+    
+    @Override
+    public String toString() {
+        return "BaseModel{" +
+                       "id='" + id + '\'' +
+                       ", createTime=" + createTime +
+                       ", updateTime=" + updateTime +
+                       ", status=" + status +
+                       '}';
     }
 }
