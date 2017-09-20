@@ -1,11 +1,13 @@
 package com.leewaiho.togogo.common.pojo;
 
+import java.io.Serializable;
+
 /**
  * @Author leewaiho
  * @Email 791783391@qq.com
  * @Date 2017/9/13
  */
-public class Result<T> {
+public class Result<T> implements Serializable {
     private String message = "操作成功";
     private boolean success = true;
     private T data;
