@@ -25,13 +25,13 @@ public class TBProduct extends BaseModel implements Serializable {
     
     private String description;
     
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "T_B_PRODUCT_TAG",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "TAG_ID", referencedColumnName = "id")})
     private Set<TBTag> productTags;
     
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "T_B_PRODUCT_IMAGE",
             joinColumns = {@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "IMAGE_ID", referencedColumnName = "id")}
