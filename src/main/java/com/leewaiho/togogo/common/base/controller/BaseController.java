@@ -6,6 +6,7 @@ import com.leewaiho.togogo.common.pojo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -34,6 +35,11 @@ public abstract class BaseController<T extends BaseModel> {
     
     @RequestMapping(method = RequestMethod.POST)
     public Result<T> save(T t) {
+        return Result.success(service.save(t));
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+    public Result<T> saveJson(@RequestBody T t) {
         return Result.success(service.save(t));
     }
     
