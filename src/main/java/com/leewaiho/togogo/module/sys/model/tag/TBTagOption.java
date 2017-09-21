@@ -83,4 +83,9 @@ public class TBTagOption extends BaseModel implements Serializable {
                        ", isDefault=" + isDefault +
                        "} " + super.toString();
     }
+    
+    public class Type {
+        public static final String ADD_POINT = "addPoint";
+        public static final String COEFFICIENT = "coefficient";
+    }
 }

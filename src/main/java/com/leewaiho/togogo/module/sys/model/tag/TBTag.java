@@ -61,4 +61,8 @@ public class TBTag extends BaseModel implements Serializable {
                        ", type='" + type + '\'' +
                        "} " + super.toString();
     }
+    
+    public class Type{
+        public static final String PRODUCT = "product";
+    }
 }
