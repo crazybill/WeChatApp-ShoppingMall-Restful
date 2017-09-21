@@ -13,10 +13,17 @@ import java.io.Serializable;
  * Project togogo-shixun
  */
 @Entity
-@Table(name = "T_S_IMG")
+@Table(name = "T_S_IMAGE")
 public class TSImage extends BaseModel implements Serializable {
     
     private String url;
+    
+    private int sort = 1;
+    
+    private String description;
+    
+    public TSImage() {
+    }
     
     public String getUrl() {
         return url;
@@ -26,10 +33,28 @@ public class TSImage extends BaseModel implements Serializable {
         this.url = url;
     }
     
+    public int getSort() {
+        return sort;
+    }
+    
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     @Override
     public String toString() {
         return "TSImage{" +
                        "url='" + url + '\'' +
+                       ", sort=" + sort +
+                       ", description='" + description + '\'' +
                        "} " + super.toString();
     }
 }
