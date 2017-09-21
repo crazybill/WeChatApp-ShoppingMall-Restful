@@ -39,11 +39,11 @@ public class TBOrder extends BaseModel implements Serializable {
     private int state = State.UNPAYED;
     
     public class State {
-        public static final int CLOSED = 01;
-        public static final int UNPAYED = 10;
-        public static final int UNCHECKED = 20;
-        public static final int PROCESSING = 30;
-        public static final int FINISHED = 40;
+        public static final int CLOSED = 01; // 已关闭
+        public static final int UNPAYED = 10; // 待支付
+        public static final int UNCHECKED = 20; // 待确认
+        public static final int PROCESSING = 30; // 正在处理
+        public static final int FINISHED = 40; // 已完成
     }
     
     public TBOrder() {
