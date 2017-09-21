@@ -34,12 +34,7 @@ public abstract class BaseController<T extends BaseModel> {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public Result<T> save(T t) {
-        return Result.success(service.save(t));
-    }
-    
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-    public Result<T> saveJson(@RequestBody T t) {
+    public Result<T> save(@RequestBody T t) {
         return Result.success(service.save(t));
     }
     
