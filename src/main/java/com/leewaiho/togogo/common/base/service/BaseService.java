@@ -25,4 +25,7 @@ public interface BaseService<T extends BaseModel> {
     
     void delete(T t);
     
+    void create(T t);
+    
+    void update(T t, String id);
 }

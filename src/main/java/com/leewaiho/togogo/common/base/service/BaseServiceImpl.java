@@ -49,19 +49,18 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
         try {
             String id = t.getId();
             String className = t.getClass().getSimpleName();
+            String operationType = "";
             if (StringUtils.isEmpty(id)) {
-                id = String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId());
-                t.setId(id);
-                log.info("新增操作 ID: {}, Bean: {}", id, className);
+                create(t);
+                operationType = "新增";
             } else {
-                T dest = repository.getOne(id);
-                log.info(dest.toString());
-                MyBeanUtil.copyProperties(t, dest);
-                t = dest;
-                log.info(t.toString());
-                log.info("更新操作 ID: {}, Bean: {} ", id, className);
+                update(t, id);
+                operationType = "更新";
             }
             t.setUpdateTime(new Date());
+            log.info("=================" + operationType + "操作======================");
+            log.info("{} : {}", className, t);
+            log.info("=================" + operationType + "操作======================");
             return repository.save(t);
         } catch (EntityNotFoundException e) {
             throw new ServiceException(t.getClass().getSimpleName() + " ID: " + t.getId() + " Not Exist!");
@@ -79,5 +78,12 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
         repository.delete(t);
     }
     
+    public void create(T t) {
+        t.setId(String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId()));
+    }
     
+    public void update(T t, String id) {
+        T dest = repository.getOne(id);
+        MyBeanUtil.copyProperties(t, dest, true);
+    }
 }
