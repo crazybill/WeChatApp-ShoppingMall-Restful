@@ -20,6 +20,8 @@ public class TSImage extends BaseModel implements Serializable {
     
     private int sort = 1;
     
+    private String type;
+    
     private String description;
     
     public TSImage() {
@@ -49,11 +51,20 @@ public class TSImage extends BaseModel implements Serializable {
         this.description = description;
     }
     
+    public String getType() {
+        return type;
+    }
+    
+    public void setType(String type) {
+        this.type = type;
+    }
+    
     @Override
     public String toString() {
         return "TSImage{" +
                        "url='" + url + '\'' +
                        ", sort=" + sort +
+                       ", type='" + type + '\'' +
                        ", description='" + description + '\'' +
                        "} " + super.toString();
     }
