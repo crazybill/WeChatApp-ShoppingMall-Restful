@@ -36,7 +36,7 @@ public class TBOrderItem extends BaseModel implements Serializable {
     )
     private Set<TBTagOption> tagOptions;
     
-    private int count;
+    private int count = 1;
     
     private BigDecimal price;
     
