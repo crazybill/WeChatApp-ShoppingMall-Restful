@@ -2,7 +2,9 @@ package com.leewaiho.togogo.module.sys.model.tag;
 
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -18,12 +20,7 @@ public class TBTag extends BaseModel implements Serializable {
     
     private String name;
     
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "T_B_TAG_OPTION_REF",
-            joinColumns = @JoinColumn(name = "TAG_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "OPTION_ID", referencedColumnName = "ID")
-    )
+    @OneToMany(mappedBy = "tag")
     private Set<TBTagOption> tagOptions;
     
     private String type;

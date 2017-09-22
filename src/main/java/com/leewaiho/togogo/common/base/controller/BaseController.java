@@ -25,7 +25,7 @@ public abstract class BaseController<T extends BaseModel> {
     
     @RequestMapping(value = "/{id:\\d{18}}", method = RequestMethod.GET)
     public  Result findById(@PathVariable String id) {
-        return Result.success(service.findById(id));
+        return Result.success(service.findOne(id));
     }
     
     @RequestMapping(method = RequestMethod.GET)

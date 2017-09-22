@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface BaseService<T extends BaseModel> {
     
-    T findById(String id);
+    T findOne(String id);
     
     Page<T> findAll(Pageable pageable);
     
@@ -22,7 +22,7 @@ public interface BaseService<T extends BaseModel> {
     
     void delete(String id);
     
-    void create(T t);
+    T create(T t);
     
-    void update(T t, String id);
+    T update(T t, String id);
 }

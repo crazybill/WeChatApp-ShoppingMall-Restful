@@ -20,7 +20,7 @@ import java.util.Set;
 @Table(name = "T_B_ORDER_ITEM")
 public class TBOrderItem extends BaseModel implements Serializable {
     
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")
     @JsonIgnore
     private TBOrder order;

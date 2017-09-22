@@ -29,10 +29,8 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     protected BaseRepository<T> repository;
     
     @Override
-    public T findById(String id) {
-        T one = repository.getOne(id);
-        if (one == null) throw new ServiceException("ID: " + id + " 的 " + one.getClass().getSimpleName() + "不存在");
-        return one;
+    public T findOne(String id) {
+        return repository.findOne(id);
     }
     
     @Override
@@ -45,12 +43,12 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
         try {
             String id = t.getId();
             String className = t.getClass().getSimpleName();
-            String operationType = "";
+            String operationType;
             if (StringUtils.isEmpty(id)) {
-                create(t);
+                t = create(t);
                 operationType = "新增";
             } else {
-                update(t, id);
+                t = update(t, id);
                 operationType = "更新";
             }
             t.setUpdateTime(new Date());
@@ -69,12 +67,16 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
         
     }
     
-    public void create(T t) {
+    public T create(T t) {
         t.setId(String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId()));
+        return t;
     }
     
-    public void update(T t, String id) {
-        T dest = repository.getOne(id);
+    public T update(T t, String id) {
+        T dest = findOne(id);
+        if (dest == null)
+            throw new ServiceException(t.getClass().getSimpleName() + " ID: " + t.getId() + " Not Exist!");
         MyBeanUtil.copyProperties(t, dest, true);
+        return t;
     }
 }

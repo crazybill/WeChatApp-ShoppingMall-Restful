@@ -1,14 +1,16 @@
 package com.leewaiho.togogo.module.sys.service.impl;
 
+import com.alibaba.druid.util.StringUtils;
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
-import com.leewaiho.togogo.common.util.IdWorker;
+import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.module.sys.model.tag.TBTag;
 import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
-import com.leewaiho.togogo.module.sys.repository.tag.TagOptionRepository;
+import com.leewaiho.togogo.module.sys.service.TagOptionService;
 import com.leewaiho.togogo.module.sys.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,28 +23,50 @@ import java.util.Set;
 public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService {
     
     @Autowired
-    private TagOptionRepository tagOptionRepository;
+    private TagOptionService tagOptionService;
     
     @Override
-    public void create(TBTag tbTag) {
+    public TBTag create(TBTag tbTag) {
         super.create(tbTag);
-        createOptionIfNotExist(tbTag);
+        return establishRelation(tbTag);
     }
     
     @Override
-    public void update(TBTag tbTag, String id) {
+    public TBTag update(TBTag tbTag, String id) {
         super.update(tbTag, id);
-        createOptionIfNotExist(tbTag);
+        return establishRelation(tbTag);
     }
     
-    private void createOptionIfNotExist(TBTag tbTag) {
-        if (tbTag.getTagOptions() != null && tbTag.getTagOptions().size() != 0) {
-            Set<TBTagOption> tagOptions = tbTag.getTagOptions();
-            for (TBTagOption tagOption : tagOptions) {
-                if (tagOption.getId() != null) continue;
-                tagOption.setId(String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId()));
-                tagOptionRepository.save(tagOption);
+    private TBTag establishRelation(TBTag tag) {
+        
+        Set<TBTagOption> tagOptions = tag.getTagOptions();
+        
+        if (tagOptions == null || tagOptions.size() == 0)
+            throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
+        
+        if (findOne(tag.getId()) == null) {
+            tag.setTagOptions(null);
+            try {
+                tag = repository.save(tag);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+                throw new ServiceException("初始化标签失败"); // 初始化父项失败时退出
             }
         }
+        
+        Set<TBTagOption> options = new HashSet<>();
+        for (TBTagOption tagOption : tagOptions) {
+            if (StringUtils.isEmpty(tagOption.getId())) {
+                tagOption.setTag(tag);
+            } else {
+                if (tagOption.getTag() != null && tagOption.getTag().getId() != tag.getId())
+                    throw new ServiceException("禁止复用标签选项"); // 复用子项时退出
+            }
+            
+            TBTagOption option = tagOptionService.save(tagOption);
+            options.add(option);
+        }
+        tag.setTagOptions(options);
+        return tag;
     }
 }

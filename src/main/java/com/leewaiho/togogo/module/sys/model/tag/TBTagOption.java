@@ -1,9 +1,9 @@
 package com.leewaiho.togogo.module.sys.model.tag;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -23,6 +23,11 @@ public class TBTagOption extends BaseModel implements Serializable {
     private String type;
     
     private boolean defaultOption;
+    
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private TBTag tag;
     
     public TBTagOption() {
     }
@@ -57,6 +62,14 @@ public class TBTagOption extends BaseModel implements Serializable {
     
     public void setDefaultOption(boolean defaultOption) {
         this.defaultOption = defaultOption;
+    }
+    
+    public TBTag getTag() {
+        return tag;
+    }
+    
+    public void setTag(TBTag tag) {
+        this.tag = tag;
     }
     
     public class Type {
