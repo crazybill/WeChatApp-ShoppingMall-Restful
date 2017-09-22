@@ -36,14 +36,34 @@ public class TBOrder extends BaseModel implements Serializable {
     
     private Date finishedTime;
     
-    private int state = State.UNPAYED;
+    private int state = State.UNPAYED.getValue();
     
-    public class State {
-        public static final int CLOSED = 01; // 已关闭
-        public static final int UNPAYED = 10; // 待支付
-        public static final int UNCHECKED = 20; // 待确认
-        public static final int PROCESSING = 30; // 正在处理
-        public static final int FINISHED = 40; // 已完成
+    public enum State {
+        CLOSED("已关闭", 01), UNPAYED("待支付", 10), UNCHECKED("待确认", 20), PROCESSING("正在处理", 30), FINISHED("已完成", 40);
+        
+        private String title;
+        private int value;
+        
+        State(String title, int value) {
+            this.title = title;
+            this.value = value;
+        }
+        
+        public String getTitle() {
+            return title;
+        }
+        
+        public int getValue() {
+            return value;
+        }
+    
+        @Override
+        public String toString() {
+            return "State{" +
+                           "title='" + title + '\'' +
+                           ", value=" + value +
+                           "} " + super.toString();
+        }
     }
     
     public TBOrder() {
