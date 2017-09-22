@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.module.sys.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 import com.leewaiho.togogo.module.sys.model.product.TBProduct;
 import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
@@ -21,6 +22,7 @@ public class TBOrderItem extends BaseModel implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ID")
+    @JsonIgnore
     private TBOrder order;
     
     @ManyToOne
@@ -83,14 +85,4 @@ public class TBOrderItem extends BaseModel implements Serializable {
         this.price = price;
     }
     
-    @Override
-    public String toString() {
-        return "TBOrderItem{" +
-                       "order=" + order +
-                       ", product=" + product +
-                       ", tagOptions=" + tagOptions +
-                       ", count=" + count +
-                       ", price=" + price +
-                       "} " + super.toString();
-    }
 }

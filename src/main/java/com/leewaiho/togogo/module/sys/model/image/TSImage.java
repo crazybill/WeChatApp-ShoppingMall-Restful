@@ -59,13 +59,4 @@ public class TSImage extends BaseModel implements Serializable {
         this.type = type;
     }
     
-    @Override
-    public String toString() {
-        return "TSImage{" +
-                       "url='" + url + '\'' +
-                       ", sort=" + sort +
-                       ", type='" + type + '\'' +
-                       ", description='" + description + '\'' +
-                       "} " + super.toString();
-    }
 }

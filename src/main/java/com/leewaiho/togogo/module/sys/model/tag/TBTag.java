@@ -55,15 +55,6 @@ public class TBTag extends BaseModel implements Serializable {
         this.type = type;
     }
     
-    @Override
-    public String toString() {
-        return "TBTag{" +
-                       "name='" + name + '\'' +
-                       ", tagOptions=" + tagOptions +
-                       ", type='" + type + '\'' +
-                       "} " + super.toString();
-    }
-    
     public class Type{
         public static final String PRODUCT = "product";
     }

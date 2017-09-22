@@ -59,16 +59,6 @@ public class TBTagOption extends BaseModel implements Serializable {
         this.defaultOption = defaultOption;
     }
     
-    @Override
-    public String toString() {
-        return "TBTagOption{" +
-                       "name='" + name + '\'' +
-                       ", value='" + value + '\'' +
-                       ", type='" + type + '\'' +
-                       ", defaultOption=" + defaultOption +
-                       "} " + super.toString();
-    }
-    
     public class Type {
         public static final String ADD_POINT = "addPoint";
         public static final String COEFFICIENT = "coefficient";

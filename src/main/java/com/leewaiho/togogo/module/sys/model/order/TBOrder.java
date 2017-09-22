@@ -125,16 +125,4 @@ public class TBOrder extends BaseModel implements Serializable {
         this.state = state;
     }
     
-    @Override
-    public String toString() {
-        return "TBOrder{" +
-                       "orderItems=" + orderItems +
-                       ", price=" + price +
-                       ", description='" + description + '\'' +
-                       ", owner=" + owner +
-                       ", processor=" + processor +
-                       ", finishedTime=" + finishedTime +
-                       ", state=" + state +
-                       "} " + super.toString();
-    }
 }

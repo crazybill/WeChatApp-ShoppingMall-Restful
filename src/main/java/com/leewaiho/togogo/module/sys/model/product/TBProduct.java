@@ -81,14 +81,4 @@ public class TBProduct extends BaseModel implements Serializable {
         this.productImages = productImages;
     }
     
-    @Override
-    public String toString() {
-        return "TBProduct{" +
-                       "name='" + name + '\'' +
-                       ", basePrice=" + basePrice +
-                       ", description='" + description + '\'' +
-                       ", productTags=" + productTags +
-                       ", productImages=" + productImages +
-                       "} " + super.toString();
-    }
 }
