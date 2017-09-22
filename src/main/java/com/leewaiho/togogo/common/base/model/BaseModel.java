@@ -1,6 +1,8 @@
 package com.leewaiho.togogo.common.base.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -22,8 +24,12 @@ public abstract class BaseModel implements Serializable{
     @Id
     private String id;
     
+    @JsonProperty(value = "create_time", access = JsonProperty.Access.READ_ONLY)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime = new Date();
     
+    @JsonProperty(value = "update_time", access = JsonProperty.Access.READ_ONLY)
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime = new Date();
     
     private int status = Status.NORMAL; // 1:正常 0:禁用
