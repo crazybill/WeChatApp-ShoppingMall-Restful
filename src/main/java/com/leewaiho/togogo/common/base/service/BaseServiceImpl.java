@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Author leewaiho
@@ -27,21 +26,18 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     protected final Logger log = LoggerFactory.getLogger(getClass().getName());
     
     @Autowired
-    private BaseRepository<T> repository;
+    protected BaseRepository<T> repository;
     
     @Override
     public T findById(String id) {
-        return repository.getOne(id);
+        T one = repository.getOne(id);
+        if (one == null) throw new ServiceException("ID: " + id + " 的 " + one.getClass().getSimpleName() + "不存在");
+        return one;
     }
     
     @Override
     public Page<T> findAll(Pageable pageable) {
         return repository.findAll(pageable);
-    }
-    
-    @Override
-    public List<T> findAll() {
-        return repository.findAll();
     }
     
     @Override
@@ -71,11 +67,6 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     public void delete(String id) {
         repository.delete(id);
         
-    }
-    
-    @Override
-    public void delete(T t) {
-        repository.delete(t);
     }
     
     public void create(T t) {
