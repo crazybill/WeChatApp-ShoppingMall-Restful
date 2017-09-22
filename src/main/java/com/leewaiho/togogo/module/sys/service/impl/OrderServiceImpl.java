@@ -13,4 +13,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderService {
+    
+    @Override
+    public TBOrder updateState(String id, int state) {
+        TBOrder order = findById(id);
+        order.setState(state);
+        return save(order);
+    }
 }

@@ -10,4 +10,13 @@ import com.leewaiho.togogo.module.sys.model.order.TBOrder;
  * Project togogo-shixun
  */
 public interface OrderService extends BaseService<TBOrder> {
+    
+    /**
+     * 更新订单的阶段
+     * @param id
+     * @param state
+     * @return
+     */
+    TBOrder updateState(String id, int state);
+    
 }
