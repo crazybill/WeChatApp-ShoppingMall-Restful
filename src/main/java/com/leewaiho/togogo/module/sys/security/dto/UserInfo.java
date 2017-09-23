@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +17,9 @@ import java.util.Set;
  * Date 2017/9/23
  * Project togogo-shixun
  */
-public class UserInfo implements UserDetails {
+public class UserInfo implements UserDetails, Serializable {
+    
+    private static final long serialVersionUID = 1L;
     
     private TSUser user;
     
