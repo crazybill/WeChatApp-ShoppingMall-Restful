@@ -30,7 +30,7 @@ public class TBOrderItem extends BaseModel implements Serializable {
     private TBProduct product;
     
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "T_B_ORDER_ITEM_TAG",
             joinColumns = @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID"),
