@@ -43,13 +43,15 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
         
         if (orderItems == null || orderItems.size() == 0)
             throw new ServiceException("禁止保存空订单,请检查");
-        
-        
-        if (findOne(order.getId()) == null) {
+    
+    
+        try {
+            findOne(order.getId());
+        } catch (ServiceException e) {
             order.setOrderItems(null);
             try {
                 order = repository.save(order);
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 log.error(e.getMessage());
                 throw new ServiceException("初始化订单失败"); // 初始化父项失败时退出
             }
@@ -74,8 +76,6 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
     @Override
     public TBOrder updateState(String id, int state) {
         TBOrder order = findOne(id);
-        if (order == null)
-            throw new ServiceException("无效ID, 无法更新订单状态");
         order.setState(state);
         return save(order);
     }

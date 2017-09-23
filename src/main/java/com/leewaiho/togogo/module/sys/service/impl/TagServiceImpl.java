@@ -43,17 +43,20 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
         
         if (tagOptions == null || tagOptions.size() == 0)
             throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
-        
-        if (findOne(tag.getId()) == null) {
+    
+        try {
+            findOne(tag.getId());
+        } catch (ServiceException e) {
             tag.setTagOptions(null);
             try {
                 tag = repository.save(tag);
-            } catch (Exception e) {
+            } catch (Exception ex) {
                 log.error(e.getMessage());
                 throw new ServiceException("初始化标签失败"); // 初始化父项失败时退出
             }
         }
-        
+    
+    
         Set<TBTagOption> options = new HashSet<>();
         for (TBTagOption tagOption : tagOptions) {
             if (StringUtils.isEmpty(tagOption.getId())) {

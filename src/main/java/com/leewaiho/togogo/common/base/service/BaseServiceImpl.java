@@ -30,7 +30,9 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     
     @Override
     public T findOne(String id) {
-        return repository.findOne(id);
+        T one = repository.findOne(id);
+        if (one == null) throw new ServiceException("无效 ID : " + id);
+        return one;
     }
     
     @Override
@@ -75,8 +77,6 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     
     public T update(T t, String id) {
         T dest = findOne(id);
-        if (dest == null)
-            throw new ServiceException(t.getClass().getSimpleName() + " ID: " + t.getId() + " Not Exist!");
         MyBeanUtil.copyProperties(t, dest, true);
         return t;
     }
