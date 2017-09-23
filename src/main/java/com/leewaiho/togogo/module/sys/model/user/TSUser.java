@@ -3,8 +3,8 @@ package com.leewaiho.togogo.module.sys.model.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Author leewaiho
@@ -29,6 +29,14 @@ public class TSUser extends BaseModel {
     private String mobilePhone;
     
     private String email;
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "T_S_USER_ROLE",
+            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")
+    )
+    private Set<TSRole> roles;
     
     public TSUser() {
     }
@@ -81,15 +89,12 @@ public class TSUser extends BaseModel {
         this.email = email;
     }
     
-    public String toString() {
-        return "TSUser{" +
-                       "openId='" + openId + '\'' +
-                       ", username='" + username + '\'' +
-                       ", password='" + password + '\'' +
-                       ", gender=" + gender +
-                       ", mobilePhone='" + mobilePhone + '\'' +
-                       ", email='" + email + '\'' +
-                       "} " + super.toString();
+    public Set<TSRole> getRoles() {
+        return roles;
+    }
+    
+    public void setRoles(Set<TSRole> roles) {
+        this.roles = roles;
     }
     
     public class Gender {
