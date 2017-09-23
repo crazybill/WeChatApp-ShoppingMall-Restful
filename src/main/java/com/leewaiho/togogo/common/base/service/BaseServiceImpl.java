@@ -9,6 +9,7 @@ import com.leewaiho.togogo.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -67,12 +68,18 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     }
     
     @Override
-    public void delete(String id) {
+    public void destroy(String id) {
         try {
-            repository.delete(id);
+            delete(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ServiceException("无效ID : " + id + ", 删除失败!");
+        } catch (DataIntegrityViolationException ex) {
+            throw new ServiceException("存在子项, 无法删除!");
         }
+    }
+    
+    public void delete(String id) {
+        repository.delete(id);
     }
     
     public T create(T t) {

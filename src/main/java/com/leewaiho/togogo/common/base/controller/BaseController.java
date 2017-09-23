@@ -40,7 +40,7 @@ public abstract class BaseController<T extends BaseModel> {
     
     @RequestMapping(value = "/{id:\\d{18}}",method = RequestMethod.DELETE)
     public Result delete(@PathVariable String id) {
-        service.delete(id);
+        service.destroy(id);
         return Result.success(null);
     }
     
