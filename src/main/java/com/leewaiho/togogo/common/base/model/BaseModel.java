@@ -26,11 +26,11 @@ public abstract class BaseModel implements Serializable{
     
     @JsonProperty(value = "create_time", access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date createTime = new Date();
+    private Date createTime;
     
     @JsonProperty(value = "update_time", access = JsonProperty.Access.READ_ONLY)
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Date updateTime = new Date();
+    private Date updateTime;
     
     private int status = Status.NORMAL; // 1:正常 0:禁用
     

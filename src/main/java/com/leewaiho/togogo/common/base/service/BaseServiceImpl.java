@@ -46,9 +46,11 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
             String operationType;
             if (StringUtils.isEmpty(id)) {
                 t = create(t);
+                t.setCreateTime(new Date());
                 operationType = "新增";
             } else {
                 t = update(t, id);
+                t.setUpdateTime(new Date());
                 operationType = "更新";
             }
             t.setUpdateTime(new Date());
@@ -64,7 +66,6 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     @Override
     public void delete(String id) {
         repository.delete(id);
-        
     }
     
     public T create(T t) {
