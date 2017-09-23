@@ -2,6 +2,7 @@ package com.leewaiho.togogo.module.sys.model.tag;
 
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +21,7 @@ public class TBTag extends BaseModel implements Serializable {
     
     private String name;
     
-    @OneToMany(mappedBy = "tag")
+    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL)
     private Set<TBTagOption> tagOptions;
     
     private String type;

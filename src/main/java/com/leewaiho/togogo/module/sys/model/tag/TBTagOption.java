@@ -3,7 +3,10 @@ package com.leewaiho.togogo.module.sys.model.tag;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -24,7 +27,7 @@ public class TBTagOption extends BaseModel implements Serializable {
     
     private boolean defaultOption;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "TAG_ID", referencedColumnName = "ID")
     @JsonIgnore
     private TBTag tag;

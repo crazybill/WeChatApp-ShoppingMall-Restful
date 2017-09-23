@@ -19,7 +19,7 @@ import java.util.Set;
 @Table(name = "T_B_ORDER")
 public class TBOrder extends BaseModel implements Serializable {
     
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<TBOrderItem> orderItems;
     
     private BigDecimal price;
