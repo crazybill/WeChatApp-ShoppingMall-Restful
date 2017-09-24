@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "T_S_USER")
-public class TSUser extends BaseModel {
+public class TSUser extends BaseModel implements Serializable {
     
     private String openId;
     
@@ -100,5 +101,16 @@ public class TSUser extends BaseModel {
     public class Gender {
         public static final int FEMALE = 0; // 女性
         public static final int MALE = 1; // 男性
+    }
+    
+    @Override
+    public String toString() {
+        return "TSUser{" +
+                       "openId='" + openId + '\'' +
+                       ", username='" + username + '\'' +
+                       ", gender=" + gender +
+                       ", mobilePhone='" + mobilePhone + '\'' +
+                       ", email='" + email + '\'' +
+                       "} " + super.toString();
     }
 }
