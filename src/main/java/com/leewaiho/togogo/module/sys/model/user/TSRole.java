@@ -53,4 +53,12 @@ public class TSRole extends BaseModel implements Serializable {
     public void setUsers(Set<TSUser> users) {
         this.users = users;
     }
+    
+    @Override
+    public String toString() {
+        return "TSRole{" +
+                       "name='" + name + '\'' +
+                       ", description='" + description + '\'' +
+                       "} " + super.toString();
+    }
 }
