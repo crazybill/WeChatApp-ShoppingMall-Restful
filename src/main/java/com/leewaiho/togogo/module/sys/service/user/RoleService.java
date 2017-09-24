@@ -1,4 +1,4 @@
-package com.leewaiho.togogo.module.sys.service;
+package com.leewaiho.togogo.module.sys.service.user;
 
 import com.leewaiho.togogo.common.base.service.BaseService;
 import com.leewaiho.togogo.module.sys.model.user.TSRole;

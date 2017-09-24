@@ -1,9 +1,8 @@
-package com.leewaiho.togogo.module.sys.service.impl;
+package com.leewaiho.togogo.module.sys.service.tag;
 
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
-import com.leewaiho.togogo.module.sys.service.TagOptionService;
 import org.springframework.stereotype.Service;
 
 /**

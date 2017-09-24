@@ -7,7 +7,7 @@ import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.common.util.HttpContextUtil;
 import com.leewaiho.togogo.module.sys.model.tag.TBTag;
 import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
-import com.leewaiho.togogo.module.sys.service.TagService;
+import com.leewaiho.togogo.module.sys.service.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.RequestBody;

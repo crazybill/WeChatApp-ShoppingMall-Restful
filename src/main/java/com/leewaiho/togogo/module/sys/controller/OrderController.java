@@ -3,7 +3,7 @@ package com.leewaiho.togogo.module.sys.controller;
 import com.leewaiho.togogo.common.base.controller.BaseController;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.module.sys.model.order.TBOrder;
-import com.leewaiho.togogo.module.sys.service.OrderService;
+import com.leewaiho.togogo.module.sys.service.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
