@@ -76,4 +76,11 @@ public class UserInfo implements UserDetails, Serializable {
     public boolean isEnabled() {
         return user.getStatus() == 1;
     }
+    
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                       "user=" + user +
+                       '}';
+    }
 }
