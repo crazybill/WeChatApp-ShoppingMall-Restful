@@ -21,6 +21,8 @@ public class TSRole extends BaseModel implements Serializable {
     
     private String name;
     
+    private String key;
+    
     private String description;
     
     @ManyToMany(mappedBy = "roles")
@@ -36,6 +38,14 @@ public class TSRole extends BaseModel implements Serializable {
     
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getKey() {
+        return key;
+    }
+    
+    public void setKey(String key) {
+        this.key = key;
     }
     
     public String getDescription() {
@@ -58,6 +68,7 @@ public class TSRole extends BaseModel implements Serializable {
     public String toString() {
         return "TSRole{" +
                        "name='" + name + '\'' +
+                       ", key='" + key + '\'' +
                        ", description='" + description + '\'' +
                        "} " + super.toString();
     }

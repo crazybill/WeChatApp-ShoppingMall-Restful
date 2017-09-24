@@ -40,7 +40,7 @@ public class UserInfo implements UserDetails, Serializable {
         Set<GrantedAuthority> authorities = new HashSet<>();
         if (user.getRoles() != null) {
             for (TSRole role : user.getRoles()) {
-                authorities.add(new SimpleGrantedAuthority(role.getName()));
+                authorities.add(new SimpleGrantedAuthority(role.getKey()));
             }
             return authorities;
         }
