@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.module.sys.security.Interceptor;
 
+import com.leewaiho.togogo.common.util.IpAddressUtil;
 import com.leewaiho.togogo.module.sys.security.SecurityUtils;
 import com.leewaiho.togogo.module.sys.security.dto.UserInfo;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ public class OAuth2Interceptor extends HandlerInterceptorAdapter {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        log.info("来自IP: {} 的网络请求", IpAddressUtil.getIpAddress(request));
         UserInfo user = SecurityUtils.getUser();
         if (user != null)
             log.info(user.toString());
