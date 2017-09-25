@@ -2,6 +2,8 @@ package com.leewaiho.togogo.module.sys.repository.image;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
 import com.leewaiho.togogo.module.sys.model.image.TSImage;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ImageRepository extends BaseRepository<TSImage> {
+    
+    Page<TSImage> findAllByType(String type, Pageable pageable);
+    
 }
