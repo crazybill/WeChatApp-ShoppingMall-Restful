@@ -5,7 +5,10 @@ import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.module.sys.model.tag.TBTag;
 import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
+import com.leewaiho.togogo.module.sys.repository.tag.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -26,6 +29,9 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
     private static final List<String> NOT_NULL_TAGS = Arrays.asList(new String[]{"product"});
     @Autowired
     private TagOptionService tagOptionService;
+    @Autowired
+    private TagRepository tagRepository;
+    
     
     @Override
     public TBTag create(TBTag tbTag) {
@@ -77,5 +83,10 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
         }
         tag.setTagOptions(options);
         return tag;
+    }
+    
+    @Override
+    public Page<TBTag> findAllByType(String type, Pageable pageable) {
+        return tagRepository.findAllByTypeContains(type, pageable);
     }
 }

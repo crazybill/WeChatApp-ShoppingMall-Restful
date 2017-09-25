@@ -5,6 +5,8 @@ import com.leewaiho.togogo.common.base.service.BaseService;
 import com.leewaiho.togogo.common.pojo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +31,7 @@ public abstract class BaseController<T extends BaseModel> {
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public Result listPage(Pageable pageable) {
+    public Result listPage(@PageableDefault(sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return Result.success(service.findAll(pageable));
     }
     

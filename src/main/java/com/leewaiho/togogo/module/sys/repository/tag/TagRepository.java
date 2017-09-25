@@ -2,6 +2,8 @@ package com.leewaiho.togogo.module.sys.repository.tag;
 
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
 import com.leewaiho.togogo.module.sys.model.tag.TBTag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,4 +14,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TagRepository extends BaseRepository<TBTag> {
+    
+    Page<TBTag> findAllByTypeContains(String type, Pageable pageable);
+    
 }

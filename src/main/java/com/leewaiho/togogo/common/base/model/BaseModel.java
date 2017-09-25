@@ -32,6 +32,8 @@ public abstract class BaseModel implements Serializable{
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date updateTime;
     
+    private int sort = 100; // 排序
+    
     private int status = Status.NORMAL; // 1:正常 0:禁用
     
     public BaseModel() {
@@ -61,6 +63,14 @@ public abstract class BaseModel implements Serializable{
         this.updateTime = updateTime;
     }
     
+    public int getSort() {
+        return sort;
+    }
+    
+    public void setSort(int sort) {
+        this.sort = sort;
+    }
+    
     public int getStatus() {
         return status;
     }
@@ -75,6 +85,7 @@ public abstract class BaseModel implements Serializable{
                        "id='" + id + '\'' +
                        ", createTime=" + createTime +
                        ", updateTime=" + updateTime +
+                       ", sort=" + sort +
                        ", status=" + status +
                        '}';
     }
