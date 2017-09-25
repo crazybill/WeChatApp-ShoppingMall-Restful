@@ -8,6 +8,7 @@ import com.leewaiho.togogo.module.sys.model.order.TBOrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +36,8 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
         return establishRelation(tbOrder);
     }
     
-    private TBOrder establishRelation(TBOrder order) {
+    @Transactional
+    TBOrder establishRelation(TBOrder order) {
         
         Set<TBOrderItem> orderItems = order.getOrderItems();
         

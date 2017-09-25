@@ -8,6 +8,7 @@ import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -38,16 +39,17 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
         return establishRelation(tbTag);
     }
     
-    private TBTag establishRelation(TBTag tag) {
+    @Transactional
+    TBTag establishRelation(TBTag tag) {
         
         Set<TBTagOption> tagOptions = tag.getTagOptions();
-    
+        
         if ((tagOptions == null || tagOptions.size() == 0)) {
             if (NOT_NULL_TAGS.contains(tag.getType()))
                 throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
             return repository.save(tag);
         }
-    
+        
         try {
             findOne(tag.getId());
         } catch (ServiceException e) {
@@ -59,8 +61,8 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
                 throw new ServiceException("初始化标签失败"); // 初始化父项失败时退出
             }
         }
-    
-    
+        
+        
         Set<TBTagOption> options = new HashSet<>();
         for (TBTagOption tagOption : tagOptions) {
             if (StringUtils.isEmpty(tagOption.getId())) {
