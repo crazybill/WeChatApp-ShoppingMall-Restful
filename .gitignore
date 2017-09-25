@@ -25,3 +25,7 @@ nbdist/
 
 ### .idea
 .idea/
+
+
+### Log
+*.log
