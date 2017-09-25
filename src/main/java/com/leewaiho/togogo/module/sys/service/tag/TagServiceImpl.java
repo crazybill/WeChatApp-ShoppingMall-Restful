@@ -42,8 +42,11 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
         
         Set<TBTagOption> tagOptions = tag.getTagOptions();
     
-        if ((tagOptions == null || tagOptions.size() == 0) && NOT_NULL_TAGS.contains(tag.getType()))
-            throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
+        if ((tagOptions == null || tagOptions.size() == 0)) {
+            if (NOT_NULL_TAGS.contains(tag.getType()))
+                throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
+            return repository.save(tag);
+        }
     
         try {
             findOne(tag.getId());
