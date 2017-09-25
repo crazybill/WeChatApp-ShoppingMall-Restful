@@ -8,7 +8,9 @@ import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,6 +22,7 @@ import java.util.Set;
 @Service
 public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService {
     
+    private static final List<String> NOT_NULL_TAGS = Arrays.asList(new String[]{"product"});
     @Autowired
     private TagOptionService tagOptionService;
     
@@ -38,8 +41,8 @@ public class TagServiceImpl extends BaseServiceImpl<TBTag> implements TagService
     private TBTag establishRelation(TBTag tag) {
         
         Set<TBTagOption> tagOptions = tag.getTagOptions();
-        
-        if (tagOptions == null || tagOptions.size() == 0)
+    
+        if ((tagOptions == null || tagOptions.size() == 0) && NOT_NULL_TAGS.contains(tag.getType()))
             throw new ServiceException("禁止保存空标签,请检查"); // 子项为空时退出
     
         try {
