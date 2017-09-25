@@ -21,7 +21,7 @@ public class TSRole extends BaseModel implements Serializable {
     
     private String name;
     
-    private String key;
+    private String roleKey;
     
     private String description;
     
@@ -40,12 +40,12 @@ public class TSRole extends BaseModel implements Serializable {
         this.name = name;
     }
     
-    public String getKey() {
-        return key;
+    public String getRoleKey() {
+        return roleKey;
     }
     
-    public void setKey(String key) {
-        this.key = key;
+    public void setRoleKey(String roleKey) {
+        this.roleKey = roleKey;
     }
     
     public String getDescription() {
@@ -68,7 +68,7 @@ public class TSRole extends BaseModel implements Serializable {
     public String toString() {
         return "TSRole{" +
                        "name='" + name + '\'' +
-                       ", key='" + key + '\'' +
+                       ", roleKey='" + roleKey + '\'' +
                        ", description='" + description + '\'' +
                        "} " + super.toString();
     }
