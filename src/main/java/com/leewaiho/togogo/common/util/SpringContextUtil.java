@@ -26,6 +26,11 @@ public class SpringContextUtil implements ApplicationContextAware {
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		context = applicationContext;
 	}
+	
+	// 获取配置文件参数值
+	public static String getParamVal(String paramKey){
+		return context.getEnvironment().getProperty(paramKey);
+	}
 
 	/**
 	 * 根据名称获取bean
