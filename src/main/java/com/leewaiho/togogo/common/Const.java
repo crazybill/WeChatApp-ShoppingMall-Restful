@@ -7,6 +7,12 @@ package com.leewaiho.togogo.common;
  */
 public class Const {
     
+    public static final String CLIENT_ID = "togogo-wxapp";
+    public static final String CLIENT_SECRET = "pigpigpig";
+    public static final String WECHAT_OPENID_KEY = "openid";
+    public static final String WECHAT_ERRMSG_KEY = "errmsg";
+    public static final String WECHAT_ERRCODE_KEY = "errcode";
+    
     public static class WeChat {
         public static final String QCODE_C = "QCODE_C";
         public static final String QCODE_A = "QCODE_A";
