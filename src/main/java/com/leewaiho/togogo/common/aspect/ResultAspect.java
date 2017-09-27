@@ -3,18 +3,15 @@ package com.leewaiho.togogo.common.aspect;
 import com.leewaiho.togogo.common.exception.CheckException;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.common.util.HttpContextUtil;
+import com.leewaiho.togogo.common.util.IpAddressUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
 /**
@@ -40,7 +37,7 @@ public class ResultAspect {
         // 记录下请求内容
         logger.info("================ {} ================", request.getRequestURL().toString());
         logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + request.getRemoteAddr());
+        logger.info("IP : " + IpAddressUtil.getIpAddress(request));
         logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
         logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
         logger.info("================= Http Request End =================");
