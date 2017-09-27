@@ -1,6 +1,11 @@
 package com.leewaiho.togogo.common.pojo;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+
 import java.io.Serializable;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @Author leewaiho
@@ -47,6 +52,21 @@ public class Result<T> implements Serializable {
     
     public static <T> Result<T> success(T data) {
         Result result = new Result<>();
+        if (data instanceof PageImpl) {
+            Page<T> page = (PageImpl<T>) data;
+            Map<String, Object> dataDetail = new LinkedHashMap<>();
+            dataDetail.put("content", page.getContent());
+            Map<String, Object> pageInfo = new LinkedHashMap<>();
+            pageInfo.put("page", page.getNumber());
+            pageInfo.put("size", page.getSize());
+            pageInfo.put("totalPages", page.getTotalPages());
+            pageInfo.put("totalElements", page.getTotalElements());
+            pageInfo.put("first", page.isFirst());
+            pageInfo.put("last", page.isLast());
+            dataDetail.put("pageInfo", pageInfo);
+            result.setData(dataDetail);
+            return result;
+        }
         result.setData(data);
         return result;
     }
