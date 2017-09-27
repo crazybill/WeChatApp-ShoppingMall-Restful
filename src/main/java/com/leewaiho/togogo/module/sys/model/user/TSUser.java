@@ -33,7 +33,7 @@ public class TSUser extends BaseModel implements Serializable {
     
     private String email;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "T_S_USER_ROLE",
             joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),

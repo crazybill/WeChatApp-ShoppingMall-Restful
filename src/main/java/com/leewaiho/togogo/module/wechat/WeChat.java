@@ -248,7 +248,7 @@ public class WeChat implements WeChatApi {
      * @return
      */
     @Override
-    public Object code2Session(String code) {
+    public ResponseEntity<String> code2Session(String code) {
         checkInitialized();
         String uriString = UriComponentsBuilder.fromHttpUrl("https://api.weixin.qq.com/sns/jscode2session")
                                    .queryParam("appid", this.appId)
@@ -260,13 +260,10 @@ public class WeChat implements WeChatApi {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-//
         HttpEntity<Map> httpEntity = new HttpEntity<>(headers);
-
-
-//        Object exchange = restTemplate.getForObject(uriString, String.class);
-        ResponseEntity<String> exchange = restTemplate.exchange(uriString, HttpMethod.GET, httpEntity, String.class);
-        return exchange;
+    
+    
+        return restTemplate.exchange(uriString, HttpMethod.GET, httpEntity, String.class);
     }
     
     /**

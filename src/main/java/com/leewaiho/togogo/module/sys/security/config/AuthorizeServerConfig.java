@@ -34,10 +34,10 @@ public class AuthorizeServerConfig extends AuthorizationServerConfigurerAdapter 
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient(Const.CLIENT_ID)
+                .secret(Const.CLIENT_SECRET)
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
                 .authorities("ROLE_CLIENT", "ROLE_TRUST_CLIENT")
                 .scopes("read", "write", "trust")
-                .secret(Const.CLIENT_SECRET)
                 .accessTokenValiditySeconds(86400)
                 .refreshTokenValiditySeconds(6000);
     }

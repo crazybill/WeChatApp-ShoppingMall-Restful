@@ -12,6 +12,7 @@ public class Const {
     public static final String WECHAT_OPENID_KEY = "openid";
     public static final String WECHAT_ERRMSG_KEY = "errmsg";
     public static final String WECHAT_ERRCODE_KEY = "errcode";
+    public static final String OAUTH_TOKEN_URI = "oauth.token";
     
     public static class WeChat {
         public static final String QCODE_C = "QCODE_C";

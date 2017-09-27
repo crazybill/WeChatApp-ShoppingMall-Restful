@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.wechat.controller;
 
 import com.leewaiho.togogo.common.pojo.Result;
-import com.leewaiho.togogo.module.wechat.WeChat;
+import com.leewaiho.togogo.module.wechat.service.WeChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,11 @@ public class WeChatController {
     private Logger log = LoggerFactory.getLogger(WeChatController.class);
     
     @Autowired
-    private WeChat weChat;
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public Result getToken() {
-        log.info(weChat.getWeChatToken().toString());
-        return Result.success(weChat.getWeChatToken());
-    }
+    private WeChatService weChatService;
     
     @RequestMapping(method = RequestMethod.GET, params = "code")
-    public Result code2info(@RequestParam("code") String code) {
+    public Result wxlogin(@RequestParam("code") String code) {
         log.info("接收到的Code: {}", code);
-        return Result.success(weChat.code2Session(code));
+        return Result.success(weChatService.wechatLogin(code));
     }
 }

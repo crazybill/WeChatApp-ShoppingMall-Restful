@@ -1,5 +1,7 @@
 package com.leewaiho.togogo.module.wechat.api;
 
+import org.springframework.http.ResponseEntity;
+
 /**
  * Author leewaiho
  * Email 791783391@qq.com
@@ -13,5 +15,5 @@ public interface WeChatApi {
      * @param code
      * @return
      */
-    Object code2Session(String code);
+    ResponseEntity<String> code2Session(String code);
 }
