@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Table(name = "T_B_TAG_OPTION")
 public class TBTagOption extends BaseModel implements Serializable {
     
-    private String name;
+    private String optionName;
     
     private String value;
     
@@ -35,12 +35,12 @@ public class TBTagOption extends BaseModel implements Serializable {
     public TBTagOption() {
     }
     
-    public String getName() {
-        return name;
+    public String getOptionName() {
+        return optionName;
     }
     
-    public void setName(String name) {
-        this.name = name;
+    public void setOptionName(String optionName) {
+        this.optionName = optionName;
     }
     
     public String getValue() {
