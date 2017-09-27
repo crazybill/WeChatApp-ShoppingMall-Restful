@@ -15,4 +15,5 @@ public interface TagService extends BaseService<TBTag> {
     
     Page<TBTag> findAllByType(String type, Pageable pageable);
     
+    Page<TBTag> findTagByTypeAndProduct(String type, String productId, Pageable pageable);
 }
