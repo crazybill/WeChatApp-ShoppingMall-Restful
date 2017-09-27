@@ -14,4 +14,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends BaseRepository<TSUser> {
     
     TSUser findByUsername(String username);
+    
+    TSUser findByOpenId(String openId);
 }

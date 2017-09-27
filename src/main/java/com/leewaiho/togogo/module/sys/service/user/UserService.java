@@ -13,4 +13,6 @@ public interface UserService extends BaseService<TSUser> {
     
     TSUser findByUsername(String username);
     
+    TSUser findByOpenId(String openId);
+    
 }
