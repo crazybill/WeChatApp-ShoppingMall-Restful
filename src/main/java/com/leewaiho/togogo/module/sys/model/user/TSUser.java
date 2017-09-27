@@ -22,6 +22,8 @@ public class TSUser extends BaseModel implements Serializable {
     
     private String username;
     
+    private String avatarUrl;
+    
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
@@ -98,6 +100,14 @@ public class TSUser extends BaseModel implements Serializable {
         this.roles = roles;
     }
     
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+    
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+    
     public class Gender {
         public static final int FEMALE = 0; // 女性
         public static final int MALE = 1; // 男性
@@ -108,6 +118,7 @@ public class TSUser extends BaseModel implements Serializable {
         return "TSUser{" +
                        "openId='" + openId + '\'' +
                        ", username='" + username + '\'' +
+                       ", avatarUrl='" + avatarUrl + '\'' +
                        ", gender=" + gender +
                        ", mobilePhone='" + mobilePhone + '\'' +
                        ", email='" + email + '\'' +
