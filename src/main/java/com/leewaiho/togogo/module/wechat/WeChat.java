@@ -9,9 +9,11 @@ import com.leewaiho.togogo.module.wechat.pojo.WeChatToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,14 +27,21 @@ import java.util.Map;
  * @Date 2017/8/26
  */
 
+@Component
 public class WeChat implements WeChatApi {
     
     private static final Logger log = LoggerFactory.getLogger(WeChat.class);
-    private String appId;
-    private String secret;
-    private String grantType = "client_credential";
-    private String apiUrl = "https://api.weixin.qq.com";
-    private int beforeMinutes = 5;
+    
+    @Value("${wechat.app.id}")
+    private String appId; // 微信 APPID
+    @Value("${wechat.app.secret}")
+    private String secret; // 微信 SECRET
+    
+    private String grantType = "client_credential"; // 微信 认证方式
+    
+    private String apiUrl = "https://api.weixin.qq.com"; // 微信请求服务器
+    
+    private int beforeMinutes = 5; // 提前多长时间重新申请TOKEN 单位:分钟
     
     @Autowired
     private RestTemplate restTemplate;
@@ -40,14 +49,6 @@ public class WeChat implements WeChatApi {
     private RedisTemplate redisTemplate;
     
     private ValueOperations valueOperations;
-    
-    public WeChat() {
-    }
-    
-    public WeChat(String appId, String secret) {
-        this.appId = appId;
-        this.secret = secret;
-    }
     
     /**
      * 根据配置文件中的信息获取access_token
@@ -255,7 +256,17 @@ public class WeChat implements WeChatApi {
                                    .queryParam("js_code", code)
                                    .queryParam("grant_type", "authorization_code")
                                    .toUriString();
-        return uriString;
+    
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+//
+        HttpEntity<Map> httpEntity = new HttpEntity<>(headers);
+
+
+//        Object exchange = restTemplate.getForObject(uriString, String.class);
+        ResponseEntity<String> exchange = restTemplate.exchange(uriString, HttpMethod.GET, httpEntity, String.class);
+        return exchange;
     }
     
     /**
