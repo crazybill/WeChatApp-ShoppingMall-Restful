@@ -36,7 +36,7 @@ public class TagController extends BaseController<TBTag> {
     
     
     @RequestMapping(method = RequestMethod.GET, value = "/{productId:\\d{18}}/{type}")
-    public Result findAllByTypeAndProduct(@PathVariable("type") String type, @PathVariable("productId") String productId, Pageable pageable) {
+    public Result findAllByTypeAndProduct(@PathVariable("type") String type, @PathVariable("productId") String productId,@PageableDefault(sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return Result.success(tagService.findTagByTypeAndProduct(type, productId, pageable));
     }
 }
