@@ -3,8 +3,8 @@ package com.leewaiho.togogo.common.base.service;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 /**
  * @Author leewaiho

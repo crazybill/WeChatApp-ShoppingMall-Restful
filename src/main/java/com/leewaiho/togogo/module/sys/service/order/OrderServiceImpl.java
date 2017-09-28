@@ -7,8 +7,8 @@ import com.leewaiho.togogo.module.sys.model.order.TBOrder;
 import com.leewaiho.togogo.module.sys.model.order.TBOrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
