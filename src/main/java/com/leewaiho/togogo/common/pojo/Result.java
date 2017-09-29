@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.common.pojo;
 
+import com.alibaba.druid.util.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -50,8 +51,10 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
     
-    public static <T> Result<T> success(T data) {
+    public static <T> Result<T> success(T data, String message) {
         Result result = new Result<>();
+        if (!StringUtils.isEmpty(message))
+            result.setMessage(message);
         if (data instanceof PageImpl) {
             Page<T> page = (PageImpl<T>) data;
             Map<String, Object> dataDetail = new LinkedHashMap<>();
@@ -70,6 +73,11 @@ public class Result<T> implements Serializable {
         result.setData(data);
         return result;
     }
+    
+    public static <T> Result<T> success(T data) {
+        return success(data, null);
+    }
+    
     
     @Override
     public String toString() {
