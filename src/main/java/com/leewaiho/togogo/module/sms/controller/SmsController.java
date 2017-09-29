@@ -21,9 +21,14 @@ public class SmsController {
     @Autowired
     private SmsService smsService;
     
-    @RequestMapping(method = RequestMethod.POST)
-    public Result sendCode(@RequestParam("phone") String phoneNumber) {
-        return Result.success(smsService.sendCode(phoneNumber, "520520"));
+    @RequestMapping(method = RequestMethod.GET, params = "phone")
+    public Result getValidCode(@RequestParam("phone") String phoneNumber) {
+        return Result.success(smsService.getPhoneCode(phoneNumber));
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, params = {"phone", "code"})
+    public Result checkValidCode(@RequestParam("phone") String phoneNumber, @RequestParam("code") String code) {
+        return Result.success(smsService.checkValidCode(phoneNumber, code), "验证成功");
     }
     
 }
