@@ -16,4 +16,6 @@ public interface UserRepository extends BaseRepository<TSUser> {
     TSUser findByUsername(String username);
     
     TSUser findByOpenId(String openId);
+    
+    TSUser findByMobilePhone(String mobilePhone);
 }
