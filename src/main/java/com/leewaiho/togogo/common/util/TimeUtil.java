@@ -42,11 +42,10 @@ public class TimeUtil {
      *
      * @param d1
      * @param d2
-     * @return 相差的秒数
+     * @return d1与d2相差的秒数 (d1-d2)
      */
     public static long getTimeDiff(Date d1, Date d2) {
-        long diff = d1.getTime() - d2.getTime() >= 0 ? d1.getTime() - d2.getTime() : d2.getTime() - d1.getTime();
-        return diff / SECOND;
+        return (d1.getTime() - d2.getTime()) / SECOND;
         
     }
 }

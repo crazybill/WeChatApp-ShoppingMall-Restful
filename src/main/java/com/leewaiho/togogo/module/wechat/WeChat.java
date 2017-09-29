@@ -221,7 +221,7 @@ public class WeChat implements WeChatApi {
      */
     private boolean isTime2Refresh(Date expiresTime) {
         long diff = TimeUtil.getTimeDiff(new Date(), expiresTime);
-        if (diff <= (beforeMinutes * 60))
+        if (diff >= 0 || (-diff) < (beforeMinutes * 60))
             return true;
         return false;
     }
