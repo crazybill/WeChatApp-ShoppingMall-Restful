@@ -41,4 +41,47 @@ public class Const {
         public static final String ERRMSG = "errmsg";
         public static final String QCODE_DIR = "/QCode";
     }
+    
+    public enum ServiceCode {
+        UNKNOWED(00000, "未知状态", false), FAILED(10000, "操作失败", false), UNLOGIN(11000, "用户未登录", false),
+        UNREGISTER(11010, "用户未注册", false), SUCCESS(20000, "操作成功"),
+        LOGIN(21000, "登录成功"), REGISTERD(21010, "注册成功");
+        
+        private int code;
+        private String message;
+        private boolean success;
+        
+        ServiceCode(int code, String message) {
+            this.code = code;
+            this.message = message;
+            this.success = true;
+        }
+        
+        ServiceCode(int code, String message, boolean success) {
+            this.code = code;
+            this.message = message;
+            this.success = success;
+        }
+        
+        public int getCode() {
+            return code;
+        }
+        
+        public String getMessage() {
+            return message;
+        }
+        
+        public boolean isSuccess() {
+            return success;
+        }
+        
+        @Override
+        public String toString() {
+            return "Code{" +
+                           "code=" + code +
+                           ", message='" + message + '\'' +
+                           ", success=" + success +
+                           "} " + super.toString();
+        }
+    }
 }

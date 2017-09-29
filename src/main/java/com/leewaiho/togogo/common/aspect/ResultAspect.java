@@ -1,6 +1,8 @@
 package com.leewaiho.togogo.common.aspect;
 
+import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.exception.CheckException;
+import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.common.util.HttpContextUtil;
 import com.leewaiho.togogo.common.util.IpAddressUtil;
@@ -62,15 +64,21 @@ public class ResultAspect {
         
         // 已知异常
         if (e instanceof CheckException) {
-            result.setMessage(e.getLocalizedMessage());
+            if (e instanceof ServiceException) {
+                ServiceException se = ((ServiceException) e);
+                result.setCode(se.getCode().getCode());
+                result.setMessage(se.getMessage());
+            } else {
+                result.setCode(ServiceCode.UNKNOWED.getCode());
+                result.setMessage(e.getLocalizedMessage());
+            }
             result.setSuccess(false);
         } else {
-            logger.error(pjp.getSignature() + " error ", e);
             result.setMessage(e.toString());
             result.setSuccess(false);
             // 未知异常是应该重点关注的，这里可以做其他操作，如通知邮件，单独写到某个文件等等。
         }
-        
+        logger.error(pjp.getSignature() + " error ", e);
         return result;
     }
     
