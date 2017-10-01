@@ -35,9 +35,17 @@ public class WeChatServiceImpl implements WeChatService {
     
     @Override
     public Object wechatLogin(String code) {
-        TSUser byOpenId = userService.findByOpenId(getOpenId(code));
-        OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
-        return accessToken;
+        try {
+            TSUser byOpenId = userService.findByOpenId(getOpenId(code));
+            OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
+            return accessToken;
+        } catch (ServiceException e) {
+            if (e.getCode() == Const.ServiceCode.NOTFOUND) {
+                throw new ServiceException(Const.ServiceCode.UNREGISTER, "用户未注册, 请先注册");
+            } else {
+                throw new ServiceException(e);
+            }
+        }
     }
     
     @Override
