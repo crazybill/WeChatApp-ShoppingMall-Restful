@@ -55,18 +55,17 @@ public class WeChatServiceImpl implements WeChatService {
         ResponseEntity<String> responseEntity = weChat.code2Session(code);
         if (responseEntity.getBody() instanceof String) {
             JSONObject response = (JSONObject) JSONObject.parse(responseEntity.getBody());
-            if (!response.containsKey(WECHAT_OPENID_KEY) || StringUtils.isEmpty(response.getString(WECHAT_OPENID_KEY))) {
-                if (response.containsKey(WECHAT_ERRMSG_KEY) && response.containsKey(WECHAT_ERRCODE_KEY)) {
-                    String errMsg = response.getString(WECHAT_ERRMSG_KEY);
-                    String errCode = response.getString(WECHAT_ERRCODE_KEY);
-                    throw new ServiceException(ServiceCode.FAILED, String.format("无法获取OpenId, 错误代码: %s, 错误原因: %s", errCode, errMsg));
-                }
-            } else {
-                if (StringUtils.isEmpty(response.getString(WECHAT_OPENID_KEY)))
-                    throw new ServiceException(ServiceCode.UNKNOWED, "OpenId异常!");
+            if (response.containsKey(WECHAT_OPENID_KEY) && StringUtils.isEmpty(response.getString(WECHAT_OPENID_KEY))) {
                 return response.getString(WECHAT_OPENID_KEY);
             }
+            if (response.containsKey(WECHAT_ERRMSG_KEY) && response.containsKey(WECHAT_ERRCODE_KEY)) {
+                String errMsg = response.getString(WECHAT_ERRMSG_KEY);
+                String errCode = response.getString(WECHAT_ERRCODE_KEY);
+                log.debug("无法获取OPENID, 错误代码: {}, 错误原因: {}", errCode, errMsg);
+                throw new ServiceException(ServiceCode.FAILED, String.format("登录失败, 原因: %s", errMsg.split(", hints: ")[0]));
+            }
         }
+    
         throw new ServiceException(ServiceCode.FAILED, "获取OpenId失败,请检查!");
     }
     
