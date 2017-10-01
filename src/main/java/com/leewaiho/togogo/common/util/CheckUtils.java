@@ -14,7 +14,7 @@ public class CheckUtils {
     
     public static boolean check(boolean condition, ServiceCode serviceCode, String message) {
         if (!condition)
-            if (StringUtils.isEmpty(message))
+            if (!StringUtils.isEmpty(message))
                 throw new ServiceException(serviceCode, message);
             else
                 throw new ServiceException(serviceCode);
