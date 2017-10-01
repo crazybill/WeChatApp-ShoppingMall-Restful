@@ -17,7 +17,7 @@ public interface SmsService {
      * @param phoneNumber
      * @return
      */
-    Object getCodeAndSend(String phoneNumber);
+    String getCodeAndSend(String phoneNumber);
     
     /**
      * 发送指定验证码到指定手机号码
@@ -26,7 +26,7 @@ public interface SmsService {
      * @param code        验证码
      * @return
      */
-    Object sendCode(String phoneNumber, String code);
+    String sendCode(String phoneNumber, String code);
     
     /**
      * 生成手机验证码并存储到Redis中

@@ -8,6 +8,10 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.leewaiho.togogo.common.Const.ServiceCode;
+import com.leewaiho.togogo.common.exception.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AliSmsClient {
     
+    private static final Logger log = LoggerFactory.getLogger(AliSmsClient.class);
     private static final String PRODUCT = "Dysmsapi"; //短信API产品名称（短信产品名固定，无需修改）
     private static final String DOMAIN = "dysmsapi.aliyuncs.com"; //短信API产品域名（接口地址固定，无需修改）
     private static final String REGION_ID = "cn-hangzhou";
@@ -42,7 +47,7 @@ public class AliSmsClient {
     @Value("${sms.templateCode}")
     private String templateCode;
     
-    public Object sendCode(String phoneNumber, String code) throws ClientException {
+    public String sendCode(String phoneNumber, String code) throws ClientException {
         //设置超时时间-可自行调整
         
         IClientProfile profile = DefaultProfile.getProfile(REGION_ID, accessKeyId,
@@ -63,8 +68,9 @@ public class AliSmsClient {
         SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
         if (sendSmsResponse.getCode() != null && sendSmsResponse.getCode().equals("OK")) {
             //请求成功
-            return sendSmsResponse;
+            return sendSmsResponse.getMessage();
         }
-        return sendSmsResponse;
+        log.error("Code: {}, Message:{}, BizId:{}, RequestId:{} ", sendSmsResponse.getCode(), sendSmsResponse.getMessage(), sendSmsResponse.getBizId(), sendSmsResponse.getRequestId());
+        throw new ServiceException(ServiceCode.UNKNOWED, "短信服务异常,请通知管理员查看");
     }
 }

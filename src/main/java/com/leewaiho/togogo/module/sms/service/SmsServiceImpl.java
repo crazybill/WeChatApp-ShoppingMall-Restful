@@ -39,13 +39,13 @@ public class SmsServiceImpl implements SmsService {
     private RedisTemplate redisTemplate;
     
     @Override
-    public Object getCodeAndSend(String phoneNumber) {
+    public String getCodeAndSend(String phoneNumber) {
         PhoneCode phoneCode = getPhoneCode(phoneNumber);
         return sendCode(phoneCode.getPhoneNumber(), phoneCode.getCode());
     }
     
     @Override
-    public Object sendCode(String phoneNumber, String code) {
+    public String sendCode(String phoneNumber, String code) {
         try {
             return aliSmsClient.sendCode(phoneNumber, code);
         } catch (ClientException e) {
