@@ -1,7 +1,7 @@
 package com.leewaiho.togogo.module.sms.service;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.leewaiho.togogo.common.Const;
+import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.common.util.IdWorker;
 import com.leewaiho.togogo.common.util.StringUtils;
@@ -56,12 +56,12 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public PhoneCode getPhoneCode(@RequestParam("phone") String phoneNumber) {
         if (!StringUtils.isPhoneLegal(phoneNumber))
-            throw new ServiceException(Const.ServiceCode.BADREQUEST, "输入的手机号码不合法");
+            throw new ServiceException(ServiceCode.BADREQUEST, "输入的手机号码不合法");
         if (redisTemplate.hasKey(phoneNumber)) {
             PhoneCode code = getPhoneCodeByNumber(phoneNumber);
             long timeDiff = TimeUtil.getTimeDiff(new Date(), code.getCreateTime());
             if (timeDiff < 0)
-                throw new ServiceException("时间校验异常");
+                throw new ServiceException(ServiceCode.UNKNOWED, "时间校验异常");
             log.info("距离生成上次生成验证码已经过了: {}s", timeDiff);
             if (timeDiff < interval)
                 throw new ServiceException(String.format("请勿频繁发送验证码请求,请等待 %d 秒后重试", interval - timeDiff));
@@ -91,10 +91,10 @@ public class SmsServiceImpl implements SmsService {
     @Override
     public boolean checkValidCode(String phoneNumber, String code) {
         if (!redisTemplate.hasKey(phoneNumber))
-            throw new ServiceException("未查询到验证码,请重新获取验证码");
+            throw new ServiceException(ServiceCode.NOTFOUND, "未查询到验证码,请重新获取验证码");
         PhoneCode phoneCode = getPhoneCodeByNumber(phoneNumber);
         if (!phoneCode.getCode().equals(code))
-            throw new ServiceException("输入的验证码有误,请重试");
+            throw new ServiceException(ServiceCode.BADREQUEST, "输入的验证码有误,请重试");
         deleteCode(phoneNumber);
         return true;
         
