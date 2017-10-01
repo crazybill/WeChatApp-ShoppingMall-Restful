@@ -3,6 +3,8 @@ package com.leewaiho.togogo.module.sys.service.user;
 import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.common.exception.ServiceException;
+import com.leewaiho.togogo.common.util.CheckUtils;
+import com.leewaiho.togogo.common.util.StringUtils;
 import com.leewaiho.togogo.module.sys.model.user.TSRole;
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
 import com.leewaiho.togogo.module.sys.repository.user.UserRepository;
@@ -59,15 +61,18 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
     
     @Override
     public boolean mobilePhoneCanUsed(String mobilePhone) {
-        if (userRepository.findByMobilePhone(mobilePhone) == null) {
-            return true;
-        }
-        return false;
+        CheckUtils.check(!StringUtils.isEmpty(mobilePhone), "手机号码不能为空");
+        CheckUtils.check(StringUtils.isPhoneLegal(mobilePhone), "手机号码格式不合法");
+        return true;
     }
     
     @Override
     protected void beforeSave(TSUser tsUser) {
-        super.beforeSave(tsUser);
+        CheckUtils.check(mobilePhoneCanUsed(tsUser.getMobilePhone()) &&
+                                 userRepository.findByMobilePhone(tsUser.getMobilePhone()) == null, "该手机号码已经被占用");
+        CheckUtils.check(!StringUtils.isEmpty(tsUser.getOpenId()) &&
+                                 userRepository.findByOpenId(tsUser.getOpenId()) == null, "该微信用户已经注册");
+    
         TSRole roleUser = roleService.findByRoleKey("ROLE_USER");
         Set<TSRole> userRoles = tsUser.getRoles();
         if (userRoles == null || userRoles.size() == 0) {
@@ -79,5 +84,6 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
             }
         }
         tsUser.setRoles(userRoles);
+        super.beforeSave(tsUser);
     }
 }
