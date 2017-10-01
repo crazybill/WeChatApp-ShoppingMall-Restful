@@ -7,7 +7,7 @@ import com.leewaiho.togogo.common.Const.ServiceCode;
  * @Email 791783391@qq.com
  * @Date 2017/9/15
  */
-public class ServiceException extends CheckException{
+public class ServiceException extends CheckException {
     
     private ServiceCode code;
     
@@ -30,14 +30,6 @@ public class ServiceException extends CheckException{
         super();
     }
     
-    public ServiceCode getCode() {
-        return code;
-    }
-    
-    public void setCode(ServiceCode code) {
-        this.code = code;
-    }
-    
     public ServiceException(String message, Throwable cause) {
         super(message, cause);
     }
@@ -48,5 +40,13 @@ public class ServiceException extends CheckException{
     
     protected ServiceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
+    }
+    
+    public ServiceCode getCode() {
+        return code;
+    }
+    
+    public void setCode(ServiceCode code) {
+        this.code = code;
     }
 }

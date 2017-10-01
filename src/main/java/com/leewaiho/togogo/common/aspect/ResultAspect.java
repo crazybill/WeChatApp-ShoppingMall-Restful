@@ -66,7 +66,8 @@ public class ResultAspect {
         if (e instanceof CheckException) {
             if (e instanceof ServiceException) {
                 ServiceException se = ((ServiceException) e);
-                result.setCode(se.getCode().getCode());
+                if (se.getCode() != null)
+                    result.setCode(se.getCode().getCode());
                 result.setMessage(se.getMessage());
             } else {
                 result.setCode(ServiceCode.UNKNOWED.getCode());
