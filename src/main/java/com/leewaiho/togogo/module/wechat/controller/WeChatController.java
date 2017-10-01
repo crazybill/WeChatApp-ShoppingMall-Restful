@@ -3,6 +3,7 @@ package com.leewaiho.togogo.module.wechat.controller;
 import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.module.sms.service.SmsService;
+import com.leewaiho.togogo.module.sys.model.user.TSUser;
 import com.leewaiho.togogo.module.wechat.dto.RegisterObject;
 import com.leewaiho.togogo.module.wechat.service.WeChatService;
 import org.slf4j.Logger;
@@ -36,7 +37,9 @@ public class WeChatController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public Result wxRegister(@RequestBody RegisterObject registerObject) {
         smsService.checkValidCode(registerObject.getMobilePhone(), registerObject.getValidCode());
-        return Result.success(ServiceCode.REGISTER, weChatService.registerOnWeChat(registerObject));
+        TSUser user = weChatService.registerOnWeChat(registerObject);
+        log.info("注册成功: {}", user);
+        return Result.success(ServiceCode.REGISTER, null, null);
     }
     
 }

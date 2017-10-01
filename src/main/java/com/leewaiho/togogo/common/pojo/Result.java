@@ -36,38 +36,6 @@ public class Result<T> implements Serializable {
         this.message = message;
     }
     
-    public String getMessage() {
-        return message;
-    }
-    
-    public void setMessage(String message) {
-        this.message = message;
-    }
-    
-    public boolean isSuccess() {
-        return success;
-    }
-    
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-    
-    public int getCode() {
-        return code;
-    }
-    
-    public void setCode(int code) {
-        this.code = code;
-    }
-    
-    public T getData() {
-        return data;
-    }
-    
-    public void setData(T data) {
-        this.data = data;
-    }
-    
     public static <T> Result<T> success(T data) {
         return success(data, null);
     }
@@ -104,6 +72,38 @@ public class Result<T> implements Serializable {
             result.setData(data);
         }
         return result;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+    
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    
+    public boolean isSuccess() {
+        return success;
+    }
+    
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+    
+    public int getCode() {
+        return code;
+    }
+    
+    public void setCode(int code) {
+        this.code = code;
+    }
+    
+    public T getData() {
+        return data;
+    }
+    
+    public void setData(T data) {
+        this.data = data;
     }
     
     @Override
