@@ -19,7 +19,8 @@ public class Const {
         NOTFOUND(10001, "查找无结果", false), UNLOGIN(11000, "用户未登录", false),
         UNREGISTER(11010, "用户未注册", false), BADREQUEST(10002, "参数不合法", false),
         HAD_BEEN_REGISTERD(11011, "已经被占用", false), SUCCESS(20000, "操作成功"),
-        LOGIN(21000, "登录成功"), REGISTER(21010, "注册成功");
+        LOGIN(21000, "登录成功"), REGISTER(21010, "注册成功"),
+        WECHAT_INVALID_CODE(40029, "登录会话失效,请重新登录", false), WECHAT_CODE_BEEN_USED(40163, "登录会话被重复使用,请刷新后重试");
         
         private int code;
         private String message;
