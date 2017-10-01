@@ -1,14 +1,13 @@
 package com.leewaiho.togogo.module.wechat.controller;
 
 import com.leewaiho.togogo.common.pojo.Result;
+import com.leewaiho.togogo.module.sms.service.SmsService;
+import com.leewaiho.togogo.module.wechat.dto.RegisterObject;
 import com.leewaiho.togogo.module.wechat.service.WeChatService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Author leewaiho
@@ -24,10 +23,19 @@ public class WeChatController {
     
     @Autowired
     private WeChatService weChatService;
+    @Autowired
+    private SmsService smsService;
     
     @RequestMapping(method = RequestMethod.GET, params = "code")
     public Result wxlogin(@RequestParam("code") String code) {
         log.info("接收到的Code: {}", code);
         return Result.success(weChatService.wechatLogin(code));
     }
+    
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
+    public Result wxRegister(@RequestBody RegisterObject registerObject) {
+        smsService.checkValidCode(registerObject.getMobilePhone(), registerObject.getValidCode());
+        return Result.success(weChatService.registerOnWeChat(registerObject));
+    }
+    
 }

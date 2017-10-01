@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.common.base.service;
 
+import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.base.model.BaseModel;
 import com.leewaiho.togogo.common.base.repository.BaseRepository;
 import com.leewaiho.togogo.common.exception.ServiceException;
@@ -33,7 +34,7 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
     @Override
     public T findOne(String id) {
         T one = repository.findOne(id);
-        if (one == null) throw new ServiceException("无效 ID : " + id);
+        if (one == null) throw new ServiceException(Const.ServiceCode.NOTFOUND, "无效 ID : " + id);
         return one;
     }
     
@@ -57,14 +58,18 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
                 t.setUpdateTime(new Date());
                 operationType = "更新";
             }
-            t.setUpdateTime(new Date());
             log.info("=================" + operationType + "操作======================");
             log.info("{} : {}", className, t);
             log.info("=================" + operationType + "操作======================");
+            beforeSave(t);
             return repository.save(t);
         } catch (EntityNotFoundException e) {
-            throw new ServiceException(t.getClass().getSimpleName() + " ID: " + t.getId() + " Not Exist!");
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, t.getClass().getSimpleName() + " ID: " + t.getId() + " Not Exist!");
         }
+    }
+    
+    protected void beforeSave(T t) {
+        t.setUpdateTime(new Date());
     }
     
     @Override
@@ -72,7 +77,7 @@ public abstract class BaseServiceImpl<T extends BaseModel> implements BaseServic
         try {
             delete(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ServiceException("无效ID : " + id + ", 删除失败!");
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, "无效ID : " + id + ", 删除失败!");
         } catch (DataIntegrityViolationException ex) {
             throw new ServiceException("存在子项, 无法删除!");
         }

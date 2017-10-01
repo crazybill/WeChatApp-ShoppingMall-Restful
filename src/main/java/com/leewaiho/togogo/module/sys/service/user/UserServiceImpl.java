@@ -1,11 +1,16 @@
 package com.leewaiho.togogo.module.sys.service.user;
 
+import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.common.exception.ServiceException;
+import com.leewaiho.togogo.module.sys.model.user.TSRole;
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
 import com.leewaiho.togogo.module.sys.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**
@@ -19,12 +24,14 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
     
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleService roleService;
     
     @Override
     public TSUser findByUsername(String username) {
         TSUser byUsername = userRepository.findByUsername(username);
         if (byUsername == null) {
-            throw new ServiceException(String.format("不存在用户名为 %s 的用户", username));
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, String.format("不存在用户名为 %s 的用户", username));
         }
         return byUsername;
     }
@@ -34,8 +41,43 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
         TSUser byOpenId = userRepository.findByOpenId(openId);
         if (byOpenId == null) {
             log.error("微信用户未注册 OpenId : {}", openId);
-            throw new ServiceException(String.format("微信用户未注册"));
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, "微信用户未注册");
         }
         return byOpenId;
+    }
+    
+    @Override
+    public TSUser findByMobilePhone(String mobilePhone) {
+        TSUser byMobilePhone = userRepository.findByMobilePhone(mobilePhone);
+        if (byMobilePhone == null) {
+            String message = String.format("%s 手机用户不存在", mobilePhone);
+            log.error(message);
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, message);
+        }
+        return byMobilePhone;
+    }
+    
+    @Override
+    public boolean mobilePhoneCanUsed(String mobilePhone) {
+        if (userRepository.findByMobilePhone(mobilePhone) == null) {
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    protected void beforeSave(TSUser tsUser) {
+        super.beforeSave(tsUser);
+        TSRole roleUser = roleService.findByRoleKey("ROLE_USER");
+        Set<TSRole> userRoles = tsUser.getRoles();
+        if (userRoles == null || userRoles.size() == 0) {
+            userRoles = new HashSet<>();
+            userRoles.add(roleUser);
+        } else {
+            if (!userRoles.contains(roleUser)) {
+                userRoles.add(roleUser);
+            }
+        }
+        tsUser.setRoles(userRoles);
     }
 }

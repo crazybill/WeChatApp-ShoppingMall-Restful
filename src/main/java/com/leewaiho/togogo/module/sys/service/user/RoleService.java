@@ -10,4 +10,7 @@ import com.leewaiho.togogo.module.sys.model.user.TSRole;
  * Project togogo-shixun
  */
 public interface RoleService extends BaseService<TSRole> {
+    
+    TSRole findByRoleKey(String roleKey);
+    
 }

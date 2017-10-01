@@ -6,8 +6,9 @@ import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.common.util.OAuth2Util;
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
-import com.leewaiho.togogo.module.sys.repository.user.UserRepository;
+import com.leewaiho.togogo.module.sys.service.user.UserService;
 import com.leewaiho.togogo.module.wechat.WeChat;
+import com.leewaiho.togogo.module.wechat.dto.RegisterObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,11 @@ public class WeChatServiceImpl implements WeChatService {
     private WeChat weChat;
     
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     
     @Override
     public Object wechatLogin(String code) {
-        TSUser byOpenId = userRepository.findByOpenId(getOpenId(code));
+        TSUser byOpenId = userService.findByOpenId(getOpenId(code));
         OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
         return accessToken;
     }
@@ -57,5 +58,18 @@ public class WeChatServiceImpl implements WeChatService {
             }
         }
         throw new ServiceException("获取OpenId失败,请检查!");
+    }
+    
+    @Override
+    public TSUser registerOnWeChat(RegisterObject object) {
+        TSUser user = new TSUser();
+        user.setOpenId(getOpenId(object.getWxCode()));
+        user.setUsername(object.getUsername());
+        user.setPassword(object.getPassword());
+        user.setMobilePhone(object.getMobilePhone());
+        user.setGender(object.getGender());
+        user.setAvatarUrl(object.getAvatarUrl());
+        userService.save(user);
+        return user;
     }
 }

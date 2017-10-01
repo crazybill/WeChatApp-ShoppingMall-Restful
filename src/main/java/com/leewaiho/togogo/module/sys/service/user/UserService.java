@@ -15,4 +15,12 @@ public interface UserService extends BaseService<TSUser> {
     
     TSUser findByOpenId(String openId);
     
+    TSUser findByMobilePhone(String mobilePhone);
+    
+    /**
+     * 检查手机号码是否已经被占用, 未被占用返回true
+     * @param mobilePhone 手机号码
+     * @return 可用true 否则false
+     */
+    boolean mobilePhoneCanUsed(String mobilePhone);
 }

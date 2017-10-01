@@ -2,6 +2,8 @@ package com.leewaiho.togogo.module.sys.service.user;
 
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.module.sys.model.user.TSRole;
+import com.leewaiho.togogo.module.sys.repository.user.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,4 +14,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<TSRole> implements RoleService {
+    
+    @Autowired
+    private RoleRepository roleRepository;
+    
+    @Override
+    public TSRole findByRoleKey(String roleKey) {
+        return roleRepository.findByRoleKey(roleKey);
+    }
+    
 }
