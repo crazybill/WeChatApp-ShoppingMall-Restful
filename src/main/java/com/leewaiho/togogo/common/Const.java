@@ -16,7 +16,7 @@ public class Const {
     
     public enum ServiceCode {
         UNKNOWED(00000, "未知状态", false), FAILED(10000, "操作失败", false), NOTFOUND(10001, "查找无结果", false), UNLOGIN(11000, "用户未登录", false),
-        UNREGISTER(11010, "用户未注册", false), BADREQUEST(10001, "参数不合法", false), SUCCESS(20000, "操作成功"),
+        UNREGISTER(11010, "用户未注册", false), BADREQUEST(10002, "参数不合法", false), SUCCESS(20000, "操作成功"),
         LOGIN(21000, "登录成功"), REGISTER(21010, "注册成功");
         
         private int code;
