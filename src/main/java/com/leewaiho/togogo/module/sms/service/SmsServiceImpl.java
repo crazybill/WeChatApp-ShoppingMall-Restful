@@ -1,8 +1,10 @@
 package com.leewaiho.togogo.module.sms.service;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.common.util.IdWorker;
+import com.leewaiho.togogo.common.util.StringUtils;
 import com.leewaiho.togogo.common.util.TimeUtil;
 import com.leewaiho.togogo.module.sms.AliSmsClient;
 import com.leewaiho.togogo.module.sms.dto.PhoneCode;
@@ -53,6 +55,8 @@ public class SmsServiceImpl implements SmsService {
     
     @Override
     public PhoneCode getPhoneCode(@RequestParam("phone") String phoneNumber) {
+        if (!StringUtils.isPhoneLegal(phoneNumber))
+            throw new ServiceException(Const.ServiceCode.BADREQUEST, "输入的手机号码不合法");
         if (redisTemplate.hasKey(phoneNumber)) {
             PhoneCode code = getPhoneCodeByNumber(phoneNumber);
             long timeDiff = TimeUtil.getTimeDiff(new Date(), code.getCreateTime());

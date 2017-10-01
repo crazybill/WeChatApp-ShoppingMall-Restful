@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.module.wechat.controller;
 
+import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.module.sms.service.SmsService;
 import com.leewaiho.togogo.module.wechat.dto.RegisterObject;
@@ -35,7 +36,7 @@ public class WeChatController {
     @RequestMapping(method = RequestMethod.POST, value = "/register")
     public Result wxRegister(@RequestBody RegisterObject registerObject) {
         smsService.checkValidCode(registerObject.getMobilePhone(), registerObject.getValidCode());
-        return Result.success(weChatService.registerOnWeChat(registerObject));
+        return Result.success(ServiceCode.REGISTER, weChatService.registerOnWeChat(registerObject));
     }
     
 }

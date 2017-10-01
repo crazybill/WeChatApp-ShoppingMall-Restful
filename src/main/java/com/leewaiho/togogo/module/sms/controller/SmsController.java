@@ -1,5 +1,6 @@
 package com.leewaiho.togogo.module.sms.controller;
 
+import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.pojo.Result;
 import com.leewaiho.togogo.module.sms.service.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class SmsController {
     
     @RequestMapping(method = RequestMethod.GET, params = "phone")
     public Result getValidCode(@RequestParam("phone") String phoneNumber) {
-        return Result.success(smsService.getPhoneCode(phoneNumber));
+        return Result.success(ServiceCode.SUCCESS ,smsService.getPhoneCode(phoneNumber), "获取验证码成功");
     }
     
     @RequestMapping(method = RequestMethod.GET, params = {"phone", "code"})

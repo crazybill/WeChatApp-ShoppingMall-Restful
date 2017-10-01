@@ -68,8 +68,23 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
     
+    public static <T> Result<T> success(T data) {
+        return success(data, null);
+    }
+    
     public static <T> Result<T> success(T data, String message) {
+        return success(ServiceCode.SUCCESS, data, message);
+    }
+    
+    public static <T> Result<T> success(ServiceCode code, T data) {
+        return success(code, data, null);
+    }
+    
+    public static <T> Result<T> success(ServiceCode code, T data, String message) {
         Result result = new Result<>();
+        result.setCode(code.getCode());
+        result.setSuccess(code.isSuccess());
+        result.setMessage(code.getMessage());
         if (!StringUtils.isEmpty(message))
             result.setMessage(message);
         if (data instanceof PageImpl) {
@@ -85,14 +100,10 @@ public class Result<T> implements Serializable {
             pageInfo.put("last", page.isLast());
             dataDetail.put("pageInfo", pageInfo);
             result.setData(dataDetail);
-            return result;
+        } else {
+            result.setData(data);
         }
-        result.setData(data);
         return result;
-    }
-    
-    public static <T> Result<T> success(T data) {
-        return success(data, null);
     }
     
     @Override
