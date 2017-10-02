@@ -34,6 +34,11 @@ public class ServiceException extends CheckException {
         super(message, cause);
     }
     
+    public ServiceException(ServiceException e) {
+        super(e.getMessage());
+        this.code = e.getCode();
+    }
+    
     public ServiceException(Throwable cause) {
         super(cause);
     }

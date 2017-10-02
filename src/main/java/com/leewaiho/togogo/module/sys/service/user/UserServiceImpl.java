@@ -42,8 +42,8 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
     public TSUser findByOpenId(String openId) {
         TSUser byOpenId = userRepository.findByOpenId(openId);
         if (byOpenId == null) {
-            log.error("微信用户未注册 OpenId : {}", openId);
-            throw new ServiceException(Const.ServiceCode.NOTFOUND, "微信用户未注册");
+            log.error("无法找到此微信用户 OpenId : {}", openId);
+            throw new ServiceException(Const.ServiceCode.NOTFOUND, "无法找到此微信用户");
         }
         return byOpenId;
     }

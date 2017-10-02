@@ -37,9 +37,17 @@ public class WeChatServiceImpl implements WeChatService {
     
     @Override
     public OAuth2AccessToken loginWeChat(String code) {
+        try {
             TSUser byOpenId = userService.findByOpenId(getOpenId(code));
             OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
             return accessToken;
+        } catch (ServiceException e) {
+            if (e.getCode().equals(ServiceCode.NOTFOUND)) {
+                throw new ServiceException(ServiceCode.UNREGISTER);
+            } else {
+                throw new ServiceException(e);
+            }
+        }
     }
     
     @Override
@@ -63,7 +71,6 @@ public class WeChatServiceImpl implements WeChatService {
                 throw new ServiceException(ServiceCode.FAILED, String.format("登录失败, 原因: %s", errMsg.split(", hints: ")[0]));
             }
         }
-    
         throw new ServiceException(ServiceCode.FAILED, "获取OpenId失败,请检查!");
     }
     
