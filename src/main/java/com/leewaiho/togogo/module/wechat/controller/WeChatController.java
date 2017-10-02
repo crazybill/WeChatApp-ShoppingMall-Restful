@@ -28,7 +28,7 @@ public class WeChatController {
     @Autowired
     private SmsService smsService;
     
-    @RequestMapping(method = RequestMethod.GET, params = "code")
+    @RequestMapping(method = RequestMethod.GET, value = "/login", params = "code")
     public Result loginWeChat(@RequestParam("code") String code) {
         log.info("接收到的Code: {}", code);
         return Result.success(weChatService.loginWeChat(code));
