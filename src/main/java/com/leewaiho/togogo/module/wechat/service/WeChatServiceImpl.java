@@ -36,18 +36,10 @@ public class WeChatServiceImpl implements WeChatService {
     private UserService userService;
     
     @Override
-    public Object wechatLogin(String code) {
-        try {
+    public OAuth2AccessToken loginWeChat(String code) {
             TSUser byOpenId = userService.findByOpenId(getOpenId(code));
             OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
             return accessToken;
-        } catch (ServiceException e) {
-            if (e.getCode() == ServiceCode.NOTFOUND) {
-                throw new ServiceException(ServiceCode.UNREGISTER, "用户未注册, 请先注册");
-            } else {
-                throw new ServiceException(ServiceCode.UNKNOWED, e.getMessage());
-            }
-        }
     }
     
     @Override
@@ -55,13 +47,19 @@ public class WeChatServiceImpl implements WeChatService {
         ResponseEntity<String> responseEntity = weChat.code2Session(code);
         if (responseEntity.getBody() instanceof String) {
             JSONObject response = (JSONObject) JSONObject.parse(responseEntity.getBody());
-            if (response.containsKey(WECHAT_OPENID_KEY) && StringUtils.isEmpty(response.getString(WECHAT_OPENID_KEY))) {
+            if (response.containsKey(WECHAT_OPENID_KEY) && !StringUtils.isEmpty(response.getString(WECHAT_OPENID_KEY))) {
                 return response.getString(WECHAT_OPENID_KEY);
             }
             if (response.containsKey(WECHAT_ERRMSG_KEY) && response.containsKey(WECHAT_ERRCODE_KEY)) {
                 String errMsg = response.getString(WECHAT_ERRMSG_KEY);
-                String errCode = response.getString(WECHAT_ERRCODE_KEY);
+                int errCode = response.getInteger(WECHAT_ERRCODE_KEY);
                 log.debug("无法获取OPENID, 错误代码: {}, 错误原因: {}", errCode, errMsg);
+                switch (errCode) {
+                    case 40029:
+                        throw new ServiceException(ServiceCode.WECHAT_INVALID_CODE);
+                    case 40163:
+                        throw new ServiceException(ServiceCode.WECHAT_CODE_BEEN_USED);
+                }
                 throw new ServiceException(ServiceCode.FAILED, String.format("登录失败, 原因: %s", errMsg.split(", hints: ")[0]));
             }
         }

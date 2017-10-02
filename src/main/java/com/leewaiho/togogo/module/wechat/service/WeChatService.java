@@ -2,6 +2,7 @@ package com.leewaiho.togogo.module.wechat.service;
 
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
 import com.leewaiho.togogo.module.wechat.dto.RegisterObject;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface WeChatService {
     
-    Object wechatLogin(String code);
+    OAuth2AccessToken loginWeChat(String code);
     
     String getOpenId(String code);
     

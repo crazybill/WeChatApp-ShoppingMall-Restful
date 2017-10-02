@@ -29,17 +29,22 @@ public class WeChatController {
     private SmsService smsService;
     
     @RequestMapping(method = RequestMethod.GET, params = "code")
-    public Result wxlogin(@RequestParam("code") String code) {
+    public Result loginWeChat(@RequestParam("code") String code) {
         log.info("接收到的Code: {}", code);
-        return Result.success(weChatService.wechatLogin(code));
+        return Result.success(weChatService.loginWeChat(code));
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/register")
-    public Result wxRegister(@RequestBody RegisterObject registerObject) {
-        smsService.checkValidCode(registerObject.getMobilePhone(), registerObject.getValidCode());
+    public Result regWeChatUser(@RequestBody RegisterObject registerObject) {
+        smsService.checkValidCode(registerObject.getMobilePhone(), SmsService.WECHAT, SmsService.REGISTER, registerObject.getValidCode());
         TSUser user = weChatService.registerOnWeChat(registerObject);
+        smsService.deleteCode(user.getMobilePhone(), SmsService.WECHAT, SmsService.REGISTER);
         log.info("注册成功: {}", user);
         return Result.success(ServiceCode.REGISTER, null, null);
     }
     
+    @RequestMapping(method = RequestMethod.GET, value = "/register")
+    public Result getRegCode(@RequestParam("phone") String phoneNumber) {
+        return Result.success(smsService.getPhoneCode(phoneNumber, SmsService.WECHAT, SmsService.REGISTER));
+    }
 }

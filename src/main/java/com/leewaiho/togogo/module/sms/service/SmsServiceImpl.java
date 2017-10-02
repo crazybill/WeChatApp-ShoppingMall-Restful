@@ -2,7 +2,9 @@ package com.leewaiho.togogo.module.sms.service;
 
 import com.aliyuncs.exceptions.ClientException;
 import com.leewaiho.togogo.common.Const.ServiceCode;
+import com.leewaiho.togogo.common.components.SpringRedisCache;
 import com.leewaiho.togogo.common.exception.ServiceException;
+import com.leewaiho.togogo.common.util.CheckUtils;
 import com.leewaiho.togogo.common.util.IdWorker;
 import com.leewaiho.togogo.common.util.StringUtils;
 import com.leewaiho.togogo.common.util.TimeUtil;
@@ -15,10 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Author leewaiho
@@ -31,16 +31,19 @@ public class SmsServiceImpl implements SmsService {
     
     private static final Logger log = LoggerFactory.getLogger(SmsService.class);
     
+    
     @Value("${sms.phoneCode.interval:60}")
     private int interval;
     @Autowired
     private AliSmsClient aliSmsClient;
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private SpringRedisCache redisCache;
     
     @Override
-    public String getCodeAndSend(String phoneNumber) {
-        PhoneCode phoneCode = getPhoneCode(phoneNumber);
+    public String getCodeAndSend(String phoneNumber, String scope, String action) {
+        PhoneCode phoneCode = getPhoneCode(phoneNumber, scope, action);
         return sendCode(phoneCode.getPhoneNumber(), phoneCode.getCode());
     }
     
@@ -53,12 +56,11 @@ public class SmsServiceImpl implements SmsService {
         }
     }
     
-    @Override
-    public PhoneCode getPhoneCode(@RequestParam("phone") String phoneNumber) {
-        if (!StringUtils.isPhoneLegal(phoneNumber))
-            throw new ServiceException(ServiceCode.BADREQUEST, "输入的手机号码不合法");
-        if (redisTemplate.hasKey(phoneNumber)) {
-            PhoneCode code = getPhoneCodeByNumber(phoneNumber);
+    public PhoneCode getPhoneCode(String phoneNumber, String scope, String action) {
+        CheckUtils.check(StringUtils.isPhoneLegal(phoneNumber), "手机格式不合法");
+        String key = redisCache.getKey(phoneNumber, scope, action);
+        if (redisTemplate.hasKey(key)) {
+            PhoneCode code = getPhoneCodeByNumber(phoneNumber, scope, action);
             long timeDiff = TimeUtil.getTimeDiff(new Date(), code.getCreateTime());
             if (timeDiff < 0)
                 throw new ServiceException(ServiceCode.UNKNOWED, "时间校验异常");
@@ -71,37 +73,36 @@ public class SmsServiceImpl implements SmsService {
         log.info("生成的ID: {}", value);
         log.info("根据ID生成的验证码: {}", code);
         PhoneCode phoneCode = new PhoneCode(phoneNumber, code, new Date());
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set(phoneCode.getPhoneNumber(), phoneCode, 5, TimeUnit.MINUTES);
+        redisCache.putCacheWithExpireTime(key, phoneCode, 5 * 60);
         return phoneCode;
     }
     
     
     @Override
-    public PhoneCode getPhoneCodeByNumber(String phoneNumber) {
+    public PhoneCode getPhoneCodeByNumber(String phoneNumber, String scope, String action) {
+        String key = redisCache.getKey(phoneNumber, scope, action);
         ValueOperations valueOperations = redisTemplate.opsForValue();
-        if (!(valueOperations.get(phoneNumber) instanceof PhoneCode)) {
-            deleteCode(phoneNumber);
+        if (!(valueOperations.get(key) instanceof PhoneCode)) {
+            deleteCode(phoneNumber, scope, action);
             throw new ServiceException("验证码状态异常, 请重试!");
         }
-        return (PhoneCode) valueOperations.get(phoneNumber);
-        
+        return redisCache.getCache(key, PhoneCode.class);
     }
     
     @Override
-    public boolean checkValidCode(String phoneNumber, String code) {
-        if (!redisTemplate.hasKey(phoneNumber))
+    public boolean checkValidCode(String phoneNumber, String scope, String action, String code) {
+        String key = redisCache.getKey(phoneNumber, scope, action);
+        if (!redisTemplate.hasKey(key))
             throw new ServiceException(ServiceCode.NOTFOUND, "未查询到验证码,请重新获取验证码");
-        PhoneCode phoneCode = getPhoneCodeByNumber(phoneNumber);
+        PhoneCode phoneCode = getPhoneCodeByNumber(phoneNumber, scope, action);
         if (!phoneCode.getCode().equals(code))
             throw new ServiceException(ServiceCode.BADREQUEST, "输入的验证码有误,请重试");
-        deleteCode(phoneNumber);
         return true;
         
     }
     
     @Override
-    public void deleteCode(String phoneNumber) {
-        redisTemplate.opsForValue().getOperations().delete(phoneNumber);
+    public void deleteCode(String phoneNumber, String scope, String action) {
+        redisTemplate.opsForValue().getOperations().delete(redisCache.getKey(phoneNumber, scope, action));
     }
 }

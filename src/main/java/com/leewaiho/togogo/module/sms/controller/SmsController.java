@@ -22,14 +22,19 @@ public class SmsController {
     @Autowired
     private SmsService smsService;
     
-    @RequestMapping(method = RequestMethod.GET, params = "phone")
-    public Result getValidCode(@RequestParam("phone") String phoneNumber) {
-        return Result.success(ServiceCode.SUCCESS ,smsService.getPhoneCode(phoneNumber), "获取验证码成功");
+    @RequestMapping(method = RequestMethod.GET, params = {"phone", "scope", "action"})
+    public Result getRegisterCode(@RequestParam("phone") String phoneNumber,
+                                  @RequestParam("scope") String scope,
+                                  @RequestParam("action") String action) {
+        return Result.success(ServiceCode.SUCCESS, smsService.getPhoneCode(phoneNumber, scope, action), "获取验证码成功");
     }
     
-    @RequestMapping(method = RequestMethod.GET, params = {"phone", "code"})
-    public Result checkValidCode(@RequestParam("phone") String phoneNumber, @RequestParam("code") String code) {
-        return Result.success(smsService.checkValidCode(phoneNumber, code), "验证成功");
+    @RequestMapping(method = RequestMethod.GET, params = {"phone", "scope", "action", "code"})
+    public Result checkValidCode(@RequestParam("phone") String phoneNumber,
+                                 @RequestParam("scope") String scope,
+                                 @RequestParam("action") String action,
+                                 @RequestParam("code") String code) {
+        return Result.success(smsService.checkValidCode(phoneNumber, scope, action, code), "验证成功");
     }
     
 }
