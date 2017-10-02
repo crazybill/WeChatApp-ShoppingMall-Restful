@@ -66,7 +66,7 @@ public class SmsServiceImpl implements SmsService {
                 throw new ServiceException(ServiceCode.UNKNOWED, "时间校验异常");
             log.info("距离生成上次生成验证码已经过了: {}s", timeDiff);
             if (timeDiff < interval)
-                throw new ServiceException(String.format("请勿频繁发送验证码请求,请等待 %d 秒后重试", interval - timeDiff));
+                throw new ServiceException(ServiceCode.FREQUENTLY, String.format("请勿频繁发送验证码请求,请等待 %d 秒后重试", interval - timeDiff));
         }
         String value = String.valueOf(IdWorker.getFlowIdWorkerInstance().nextId());
         String code = value.substring(value.length() - 4, value.length());
