@@ -39,7 +39,7 @@ public class WeChatServiceImpl implements WeChatService {
     public OAuth2AccessToken loginWeChat(String code) {
         try {
             TSUser byOpenId = userService.findByOpenId(getOpenId(code));
-            OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getUsername(), byOpenId.getPassword());
+            OAuth2AccessToken accessToken = OAuth2Util.getAccessToken(byOpenId.getMobilePhone(), byOpenId.getPassword());
             return accessToken;
         } catch (ServiceException e) {
             if (e.getCode().equals(ServiceCode.NOTFOUND)) {
