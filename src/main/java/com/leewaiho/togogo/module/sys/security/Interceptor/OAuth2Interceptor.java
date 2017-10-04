@@ -9,6 +9,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * Author leewaiho
@@ -23,6 +24,13 @@ public class OAuth2Interceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         log.info("来自IP: {} 的网络请求, HTTP Method: {}, 目标地址: {}", IpAddressUtil.getIpAddress(request), request.getMethod(), request.getRequestURL());
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        if (parameterMap == null || parameterMap.size() == 0)
+            log.info("没有传参数");
+        else
+            for (Map.Entry<String, String[]> stringEntry : parameterMap.entrySet()) {
+                log.info("{} : {}", stringEntry.getKey(), stringEntry.getValue());
+            }
         UserInfo user = SecurityUtils.getUser();
         if (user != null)
             log.info(user.toString());
