@@ -66,10 +66,23 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
         return true;
     }
     
+    public boolean canBeUsed(String mobilePhone, TSUser user) {
+        
+        TSUser tsUser = userRepository.findByMobilePhone(mobilePhone);
+        
+        if (tsUser == null) return true; // 没有用户使用
+        
+        if (StringUtils.isEmpty(user.getId())) return false; // 有用户使用 但是被保存用户没有ID(新增的用户)
+        
+        if (tsUser.getId().equals(user.getId())) return true; // 被修改的用户与查询出来的用户ID相同
+        
+        return false;
+    }
+    
     @Override
     protected void beforeSave(TSUser tsUser) {
         CheckUtils.check(mobilePhoneCanUsed(tsUser.getMobilePhone()) &&
-                                 userRepository.findByMobilePhone(tsUser.getMobilePhone()) == null, "该手机号码已经被占用");
+                                 canBeUsed(tsUser.getMobilePhone(), tsUser), "该手机号码已经被占用");
         if (!StringUtils.isEmpty(tsUser.getOpenId()))
             CheckUtils.check(userRepository.findByOpenId(tsUser.getOpenId()) == null, "该微信用户已经注册");
     
