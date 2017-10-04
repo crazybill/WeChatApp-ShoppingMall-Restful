@@ -66,25 +66,38 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
         return true;
     }
     
-    public boolean canBeUsed(String mobilePhone, TSUser user) {
+    private boolean isUsefulPhone(String mobilePhone, TSUser user) {
+        
+        if (!mobilePhoneCanUsed(mobilePhone))
+            return false;
         
         TSUser tsUser = userRepository.findByMobilePhone(mobilePhone);
         
         if (tsUser == null) return true; // 没有用户使用
-        
-        if (StringUtils.isEmpty(user.getId())) return false; // 有用户使用 但是被保存用户没有ID(新增的用户)
         
         if (tsUser.getId().equals(user.getId())) return true; // 被修改的用户与查询出来的用户ID相同
         
         return false;
     }
     
+    private boolean isUsefulOpenId(String openId, TSUser user) {
+        TSUser tsUser = userRepository.findByOpenId(openId);
+        
+        if (tsUser == null) return true;
+        
+        if (tsUser.getId().equals(user.getId())) return true;
+        
+        return false;
+        
+    }
+    
     @Override
     protected void beforeSave(TSUser tsUser) {
-        CheckUtils.check(mobilePhoneCanUsed(tsUser.getMobilePhone()) &&
-                                 canBeUsed(tsUser.getMobilePhone(), tsUser), "该手机号码已经被占用");
+        
+        CheckUtils.check(isUsefulPhone(tsUser.getMobilePhone(), tsUser), "该手机号码已经被占用");
+        
         if (!StringUtils.isEmpty(tsUser.getOpenId()))
-            CheckUtils.check(userRepository.findByOpenId(tsUser.getOpenId()) == null, "该微信用户已经注册");
+            CheckUtils.check(isUsefulOpenId(tsUser.getOpenId(), tsUser), "该微信用户已经注册");
     
         TSRole roleUser = roleService.findByRoleKey("ROLE_USER");
         Set<TSRole> userRoles = tsUser.getRoles();
