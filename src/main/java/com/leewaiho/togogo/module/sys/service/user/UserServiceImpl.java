@@ -70,8 +70,8 @@ public class UserServiceImpl extends BaseServiceImpl<TSUser> implements UserServ
     protected void beforeSave(TSUser tsUser) {
         CheckUtils.check(mobilePhoneCanUsed(tsUser.getMobilePhone()) &&
                                  userRepository.findByMobilePhone(tsUser.getMobilePhone()) == null, "该手机号码已经被占用");
-        CheckUtils.check(!StringUtils.isEmpty(tsUser.getOpenId()) &&
-                                 userRepository.findByOpenId(tsUser.getOpenId()) == null, "该微信用户已经注册");
+        if (StringUtils.isEmpty(tsUser.getOpenId()))
+            CheckUtils.check(userRepository.findByOpenId(tsUser.getOpenId()) == null, "该微信用户已经注册");
     
         TSRole roleUser = roleService.findByRoleKey("ROLE_USER");
         Set<TSRole> userRoles = tsUser.getRoles();
