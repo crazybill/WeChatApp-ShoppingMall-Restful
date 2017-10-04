@@ -1,5 +1,7 @@
 package com.leewaiho.togogo.module.oss.service;
 
+import com.leewaiho.togogo.module.sys.security.SecurityUtils;
+import com.leewaiho.togogo.module.sys.security.dto.UserInfo;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import org.slf4j.Logger;
@@ -31,19 +33,23 @@ public class QiniuOssServiceImpl implements OssService {
     private String callbackBodyType;
     
     public String getToken() {
+        UserInfo user = SecurityUtils.getUser();
+        if (user != null)
+            log.info("上传者的ID: {}, 用户名:{}", user.getUser().getId(), user.getUser().getUsername());
+        Auth auth = Auth.create(accessKey, secretKey);
+        StringMap putPolicy = new StringMap();
+        if (user != null)
+            callbackUrl = callbackUrl + "?uid=" + user.getUser().getId();
+        putPolicy.put("callbackUrl", callbackUrl);
+        putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
+        putPolicy.put("callbackBodyType", callbackBodyType);
+        String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
         log.info("accessKey: {}", accessKey);
         log.info("secretKey: {}", secretKey);
         log.info("bucket: {}", bucket);
         log.info("callbackUrl: {}", callbackUrl);
         log.info("expireSeconds: {}", expireSeconds);
         log.info("callbackBodyType: {}", callbackBodyType);
-        
-        Auth auth = Auth.create(accessKey, secretKey);
-        StringMap putPolicy = new StringMap();
-        putPolicy.put("callbackUrl", callbackUrl);
-        putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
-        putPolicy.put("callbackBodyType", callbackBodyType);
-        String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
         log.info("upToken: {}", upToken);
         return upToken;
     }

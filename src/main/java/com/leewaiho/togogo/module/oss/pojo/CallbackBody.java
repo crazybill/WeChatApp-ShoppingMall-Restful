@@ -47,4 +47,14 @@ public class CallbackBody {
     public void setFsize(String fsize) {
         this.fsize = fsize;
     }
+    
+    @Override
+    public String toString() {
+        return "CallbackBody{" +
+                       "key='" + key + '\'' +
+                       ", hash='" + hash + '\'' +
+                       ", bucket='" + bucket + '\'' +
+                       ", fsize='" + fsize + '\'' +
+                       '}';
+    }
 }
