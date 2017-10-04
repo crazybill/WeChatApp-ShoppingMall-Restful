@@ -22,7 +22,7 @@ public class OAuth2Interceptor extends HandlerInterceptorAdapter {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("来自IP: {} 的网络请求, HTTP Method: {}", IpAddressUtil.getIpAddress(request), request.getMethod());
+        log.info("来自IP: {} 的网络请求, HTTP Method: {}, 目标地址: {}", IpAddressUtil.getIpAddress(request), request.getMethod(), request.getRequestURL());
         UserInfo user = SecurityUtils.getUser();
         if (user != null)
             log.info(user.toString());
