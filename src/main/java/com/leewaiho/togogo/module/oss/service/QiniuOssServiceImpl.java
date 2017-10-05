@@ -1,5 +1,7 @@
 package com.leewaiho.togogo.module.oss.service;
 
+import com.leewaiho.togogo.common.Const.ServiceCode;
+import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.module.oss.pojo.CallbackBody;
 import com.leewaiho.togogo.module.sys.model.image.TSImage;
 import com.leewaiho.togogo.module.sys.security.SecurityUtils;
@@ -65,12 +67,19 @@ public class QiniuOssServiceImpl implements OssService {
     public Object callback(CallbackBody callbackBody) {
         String key = callbackBody.getKey();
         String url = resourceUrl + "/" + key;
-        TSImage image = new TSImage();
-        image.setUrl(url);
-        image.setDescription("商品图片");
-        image.setType("product");
-        image.setSort(100);
-        return imageService.save(image);
+        try {
+            return imageService.findByUrl(url);
+        } catch (ServiceException e) {
+            if (e.getCode().equals(ServiceCode.NOTFOUND)) {
+                TSImage image = new TSImage();
+                image.setUrl(url);
+                image.setDescription("商品图片");
+                image.setType("product");
+                image.setSort(100);
+                return imageService.save(image);
+            }
+            throw new ServiceException(ServiceCode.UNKNOWED, "我也不知道怎么回事,大概是在回调图片的时候发生了点错误");
+        }
     }
     
 }

@@ -16,4 +16,6 @@ public interface ImageService extends BaseService<TSImage> {
     
     Page<TSImage> findAllByType(String type, Pageable pageable);
     
+    TSImage findByUrl(String url);
+    
 }

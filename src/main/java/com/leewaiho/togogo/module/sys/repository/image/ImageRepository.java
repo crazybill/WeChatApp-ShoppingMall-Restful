@@ -17,4 +17,5 @@ public interface ImageRepository extends BaseRepository<TSImage> {
     
     Page<TSImage> findAllByType(String type, Pageable pageable);
     
+    TSImage findByUrl(String url);
 }
