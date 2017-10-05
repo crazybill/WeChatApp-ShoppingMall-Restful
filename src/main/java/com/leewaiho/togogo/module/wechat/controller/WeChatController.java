@@ -31,7 +31,7 @@ public class WeChatController {
     @RequestMapping(method = RequestMethod.GET, value = "/login", params = "code")
     public Result loginWeChat(@RequestParam("code") String code) {
         log.info("接收到的Code: {}", code);
-        return Result.success(weChatService.loginWeChat(code));
+        return Result.success(ServiceCode.LOGIN, weChatService.loginWeChat(code));
     }
     
     @RequestMapping(method = RequestMethod.POST, value = "/register")
