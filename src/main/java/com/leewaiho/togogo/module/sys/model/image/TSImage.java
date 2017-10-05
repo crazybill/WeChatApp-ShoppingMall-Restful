@@ -18,7 +18,7 @@ public class TSImage extends BaseModel implements Serializable {
     
     private String url;
     
-    private int sort = 1;
+    private int sort = 100;
     
     private String type;
     

@@ -1,5 +1,7 @@
 package com.leewaiho.togogo.module.oss.service;
 
+import com.leewaiho.togogo.module.oss.pojo.CallbackBody;
+
 /**
  * Author leewaiho
  * Email 791783391@qq.com
@@ -9,4 +11,7 @@ package com.leewaiho.togogo.module.oss.service;
 public interface OssService {
     
     String getToken();
+    
+    Object callback(CallbackBody callbackBody);
+    
 }

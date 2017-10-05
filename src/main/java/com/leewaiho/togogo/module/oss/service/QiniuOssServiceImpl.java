@@ -1,11 +1,15 @@
 package com.leewaiho.togogo.module.oss.service;
 
+import com.leewaiho.togogo.module.oss.pojo.CallbackBody;
+import com.leewaiho.togogo.module.sys.model.image.TSImage;
 import com.leewaiho.togogo.module.sys.security.SecurityUtils;
 import com.leewaiho.togogo.module.sys.security.dto.UserInfo;
+import com.leewaiho.togogo.module.sys.service.image.ImageService;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +35,10 @@ public class QiniuOssServiceImpl implements OssService {
     private long expireSeconds;
     @Value("${oss.callbackBodyType:application/json}")
     private String callbackBodyType;
+    @Value("${oss.qiniu.resourceUrl}")
+    private String resourceUrl;
+    @Autowired
+    private ImageService imageService;
     
     public String getToken() {
         UserInfo user = SecurityUtils.getUser();
@@ -52,6 +60,17 @@ public class QiniuOssServiceImpl implements OssService {
         log.info("callbackBodyType: {}", callbackBodyType);
         log.info("upToken: {}", upToken);
         return upToken;
+    }
+    
+    public Object callback(CallbackBody callbackBody) {
+        String key = callbackBody.getKey();
+        String url = resourceUrl + "/" + key;
+        TSImage image = new TSImage();
+        image.setUrl(url);
+        image.setDescription("商品图片");
+        image.setType("product");
+        image.setSort(100);
+        return imageService.save(image);
     }
     
 }
