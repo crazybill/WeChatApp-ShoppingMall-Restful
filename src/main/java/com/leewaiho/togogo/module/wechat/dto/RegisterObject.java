@@ -82,4 +82,17 @@ public class RegisterObject implements Serializable {
     public void setWxCode(String wxCode) {
         this.wxCode = wxCode;
     }
+    
+    @Override
+    public String toString() {
+        return "RegisterObject{" +
+                       "username='" + username + '\'' +
+                       ", password='" + password + '\'' +
+                       ", avatarUrl='" + avatarUrl + '\'' +
+                       ", gender=" + gender +
+                       ", mobilePhone='" + mobilePhone + '\'' +
+                       ", validCode='" + validCode + '\'' +
+                       ", wxCode='" + wxCode + '\'' +
+                       '}';
+    }
 }
