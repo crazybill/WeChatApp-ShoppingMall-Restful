@@ -18,6 +18,7 @@ import java.util.Set;
 @Table(name = "T_S_USER")
 public class TSUser extends BaseModel implements Serializable {
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String openId;
     
     private String username;

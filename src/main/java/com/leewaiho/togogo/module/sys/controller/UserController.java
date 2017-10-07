@@ -23,7 +23,7 @@ public class UserController extends BaseController<TSUser> {
     @RequestMapping(value = "/me", method = RequestMethod.GET)
     public Result whoami() {
         UserInfo user = SecurityUtils.getUser();
-        return Result.success(user.getUsername());
+        return Result.success(user.getUser());
     }
 
 }
