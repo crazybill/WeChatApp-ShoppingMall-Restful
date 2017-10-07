@@ -3,8 +3,10 @@ package com.leewaiho.togogo.module.sys.service.order;
 import com.alibaba.druid.util.StringUtils;
 import com.leewaiho.togogo.common.base.service.BaseServiceImpl;
 import com.leewaiho.togogo.common.exception.ServiceException;
+import com.leewaiho.togogo.common.util.CheckUtils;
 import com.leewaiho.togogo.module.sys.model.order.TBOrder;
 import com.leewaiho.togogo.module.sys.model.order.TBOrderItem;
+import com.leewaiho.togogo.module.sys.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +25,8 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
     
     @Autowired
     private OrderItemService orderItemService;
+    @Autowired
+    private UserRepository userRepository;
     
     @Override
     public TBOrder create(TBOrder tbOrder) {
@@ -40,7 +44,9 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
     TBOrder establishRelation(TBOrder order) {
         
         Set<TBOrderItem> orderItems = order.getOrderItems();
-        
+    
+        CheckUtils.check(order.getOwner() != null && (userRepository.findOne(order.getOwner().getId()) != null), "非法订单,无法获取下单者");
+    
         if (orderItems == null || orderItems.size() == 0)
             throw new ServiceException("禁止保存空订单,请检查");
     
@@ -52,7 +58,7 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
             try {
                 order = repository.save(order);
             } catch (Exception ex) {
-                log.error(e.getMessage());
+                log.error(ex.getMessage());
                 throw new ServiceException("初始化订单失败"); // 初始化父项失败时退出
             }
         }
