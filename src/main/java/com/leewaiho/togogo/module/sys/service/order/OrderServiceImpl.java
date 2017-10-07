@@ -45,7 +45,7 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
         
         Set<TBOrderItem> orderItems = order.getOrderItems();
     
-        CheckUtils.check(order.getOwner() != null && (userRepository.findOne(order.getOwner().getId()) != null), "非法订单,无法获取下单者");
+        CheckUtils.check(isUsefulOwner(order), "非法订单,无法获取下单者");
     
         if (orderItems == null || orderItems.size() == 0)
             throw new ServiceException("禁止保存空订单,请检查");
@@ -77,6 +77,16 @@ public class OrderServiceImpl extends BaseServiceImpl<TBOrder> implements OrderS
         }
         order.setOrderItems(items);
         return order;
+    }
+    
+    private boolean isUsefulOwner(TBOrder order) {
+        if (order.getOwner() == null) return false;
+        
+        if (StringUtils.isEmpty(order.getOwner().getId())) return false;
+        
+        if (userRepository.findOne(order.getOwner().getId()) == null) return false;
+        
+        return true;
     }
     
     @Override
