@@ -39,8 +39,7 @@ public class TBOrder extends BaseModel implements Serializable {
     private int state = State.UNPAYED.getValue();
     
     public enum State {
-        CLOSED("已关闭", 01), UNPAYED("待支付", 10), UNCHECKED("待确认", 20), PROCESSING("正在处理", 30), FINISHED("已完成", 40);
-        
+        CLOSED("已关闭", 1), UNPAYED("待支付", 10), UNCHECKED("待确认", 20), PROCESSING("正在处理", 30), FINISHED("已完成", 40);
         private String title;
         private int value;
         
