@@ -64,7 +64,30 @@ public class TBTag extends BaseModel implements Serializable {
         this.products = products;
     }
     
-    public class Type{
-        public static final String PRODUCT = "product";
+    public enum Type {
+        PRODUCT("商品", "product"), PRODUCT_CATEGORY("商品分类", "productCategory");
+        private String name;
+        private String value;
+        
+        Type(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public void setName(String name) {
+            this.name = name;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+        
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 }

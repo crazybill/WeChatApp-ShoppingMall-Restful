@@ -3,6 +3,8 @@ package com.leewaiho.togogo.common.base.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
@@ -34,7 +36,7 @@ public abstract class BaseModel implements Serializable{
     
     private int sort = 100; // 排序
     
-    private int status = Status.NORMAL; // 1:正常 0:禁用
+    private int status = Status.NORMAL.getValue(); // 1:正常 0:禁用
     
     public BaseModel() {
     }
@@ -90,9 +92,11 @@ public abstract class BaseModel implements Serializable{
                        '}';
     }
     
-    public class Status{
-        public static final int NORMAL = 1; // 正常
-        public static final int DISABLE = -1; // 禁用 未启用 未激活
-        public static final int LOCKED = 0; // 锁定
+    @AllArgsConstructor
+    @Getter
+    public enum Status {
+        NORMAL("正常", 1), LOCKED("锁定", 0), DISABLED("禁用", -1);
+        private String name;
+        private int value;
     }
 }

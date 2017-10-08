@@ -75,8 +75,30 @@ public class TBTagOption extends BaseModel implements Serializable {
         this.tag = tag;
     }
     
-    public class Type {
-        public static final String ADD_POINT = "addPoint";
-        public static final String COEFFICIENT = "coefficient";
+    public enum Type {
+        ADDPOINT("加分标签", "addPoint"), COEFFICIENT("系数标签", "coefficient");
+        private String name;
+        private String value;
+        
+        Type(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public void setName(String name) {
+            this.name = name;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+        
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 }
