@@ -1,5 +1,6 @@
-package com.leewaiho.togogo.module.sys.security.config;
+package com.leewaiho.togogo.config;
 
+import com.leewaiho.togogo.common.interceptor.HttpRequestInterceptor;
 import com.leewaiho.togogo.module.sys.security.Interceptor.OAuth2Interceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class InterceptorRegisterConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new HttpRequestInterceptor());
         registry.addInterceptor(new OAuth2Interceptor()).excludePathPatterns("/oauth/**");
         super.addInterceptors(registry);
     }

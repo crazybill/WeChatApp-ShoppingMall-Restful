@@ -4,8 +4,6 @@ import com.leewaiho.togogo.common.Const.ServiceCode;
 import com.leewaiho.togogo.common.exception.CheckException;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.common.pojo.Result;
-import com.leewaiho.togogo.common.util.HttpContextUtil;
-import com.leewaiho.togogo.common.util.IpAddressUtil;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
@@ -34,15 +31,9 @@ public class ResultAspect {
     
     @Before("Result()")
     public void doBefore(JoinPoint joinPoint) {
-        // 接收到请求，记录请求内容
-        HttpServletRequest request = HttpContextUtil.getRequest();
         // 记录下请求内容
-        logger.info("================ {} ================", request.getRequestURL().toString());
-        logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + IpAddressUtil.getIpAddress(request));
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
-        logger.info("================= Http Request End =================");
+        logger.info("触发方法 : {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
+        logger.info("传递参数 : {} ", Arrays.toString(joinPoint.getArgs()));
     }
     
     @Around("Result()")
@@ -51,7 +42,7 @@ public class ResultAspect {
         Result<?> result;
         try {
             result = (Result<?>) joinPoint.proceed();
-            logger.info("Method: " + joinPoint.getSignature() + " use Time: " + (System.currentTimeMillis() - startTime) + "ms");
+            logger.info("方法: {} 使用的时间: {} ms", joinPoint.getSignature(), (System.currentTimeMillis() - startTime) + "ms");
         } catch (Throwable throwable) {
             result = handlerException(joinPoint, throwable);
         }
@@ -86,6 +77,6 @@ public class ResultAspect {
     @AfterReturning(returning = "result", pointcut = "Result()")
     public void doAfterReturning(Object result) throws Throwable {
         // 处理完请求，返回内容
-        logger.info("Response : " + result);
+        logger.info("响应内容 : {}", result);
     }
 }
