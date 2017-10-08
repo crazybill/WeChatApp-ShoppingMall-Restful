@@ -95,7 +95,7 @@ public abstract class BaseModel implements Serializable{
     @AllArgsConstructor
     @Getter
     public enum Status {
-        NORMAL("正常", 1), LOCKED("锁定", 0), DISABLED("禁用", -1);
+        NORMAL("正常", 1), DISABLED("禁用", -1);
         private String name;
         private int value;
     }
