@@ -45,6 +45,6 @@ public class WeChatController {
     
     @RequestMapping(method = RequestMethod.GET, value = "/register")
     public Result getRegCode(@RequestParam("phone") String phoneNumber) {
-        return Result.success(smsService.getCodeAndSend(phoneNumber, SmsService.WECHAT, SmsService.REGISTER));
+        return Result.success(smsService.getPhoneCode(phoneNumber, SmsService.WECHAT, SmsService.REGISTER));
     }
 }

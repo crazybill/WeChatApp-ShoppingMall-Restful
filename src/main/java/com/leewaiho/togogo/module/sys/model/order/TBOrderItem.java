@@ -1,14 +1,16 @@
 package com.leewaiho.togogo.module.sys.model.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.leewaiho.togogo.common.base.model.BaseModel;
+import com.leewaiho.togogo.common.jsonFormatter.CustomStringDeserializer;
+import com.leewaiho.togogo.common.jsonFormatter.CustomStringSerializer;
 import com.leewaiho.togogo.module.sys.model.product.TBProduct;
-import com.leewaiho.togogo.module.sys.model.tag.TBTagOption;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
 /**
  * Author leewaiho
@@ -30,13 +32,10 @@ public class TBOrderItem extends BaseModel implements Serializable {
     private TBProduct product;
     
     
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "T_B_ORDER_ITEM_TAG",
-            joinColumns = @JoinColumn(name = "ITEM_ID", referencedColumnName = "ID"),
-            inverseJoinColumns = @JoinColumn(name = "TAG_OPTION_ID", referencedColumnName = "ID")
-    )
-    private Set<TBTagOption> tagOptions;
+    @Column(columnDefinition = "longtext")
+    @JsonSerialize(using = CustomStringSerializer.class)
+    @JsonDeserialize(using = CustomStringDeserializer.class)
+    private String tagOptions;
     
     private int count = 1;
     
@@ -61,11 +60,11 @@ public class TBOrderItem extends BaseModel implements Serializable {
         this.product = product;
     }
     
-    public Set<TBTagOption> getTagOptions() {
+    public String getTagOptions() {
         return tagOptions;
     }
     
-    public void setTagOptions(Set<TBTagOption> tagOptions) {
+    public void setTagOptions(String tagOptions) {
         this.tagOptions = tagOptions;
     }
     
