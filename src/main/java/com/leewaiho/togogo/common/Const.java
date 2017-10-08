@@ -13,6 +13,7 @@ public class Const {
     public static final String WECHAT_ERRMSG_KEY = "errmsg";
     public static final String WECHAT_ERRCODE_KEY = "errcode";
     public static final String OAUTH_TOKEN_URI = "oauth.token";
+    public static final String BASE_PATH = "/api";
     
     public enum ServiceCode {
         UNKNOWED(00000, "未知状态", false), FAILED(10000, "操作失败", false),

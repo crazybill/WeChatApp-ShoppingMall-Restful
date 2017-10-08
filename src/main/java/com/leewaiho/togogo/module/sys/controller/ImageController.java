@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PATH;
+import static com.leewaiho.togogo.common.Const.BASE_PATH;
 
 /**
  * Author leewaiho

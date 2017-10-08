@@ -27,8 +27,6 @@ public abstract class BaseController<T extends BaseModel> {
     @Autowired
     private BaseService<T> service;
     
-    public static final String BASE_PATH = "/api";
-    
     @RequestMapping(value = "/{id:\\d{18}}", method = RequestMethod.GET)
     public  Result findById(@PathVariable String id) {
         return Result.success(service.findOne(id));

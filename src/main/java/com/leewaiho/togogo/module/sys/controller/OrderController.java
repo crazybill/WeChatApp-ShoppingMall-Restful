@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PATH;
+import static com.leewaiho.togogo.common.Const.BASE_PATH;
 
 /**
  * Author leewaiho

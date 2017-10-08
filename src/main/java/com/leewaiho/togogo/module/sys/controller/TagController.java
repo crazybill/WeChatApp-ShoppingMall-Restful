@@ -12,7 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import static com.leewaiho.togogo.common.base.controller.BaseController.BASE_PATH;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.leewaiho.togogo.common.Const.BASE_PATH;
 
 /**
  * Author leewaiho
@@ -36,7 +39,16 @@ public class TagController extends BaseController<TBTag> {
     
     
     @RequestMapping(method = RequestMethod.GET, value = "/{productId:\\d{18}}/{type}")
-    public Result findAllByTypeAndProduct(@PathVariable("type") String type, @PathVariable("productId") String productId,@PageableDefault(sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public Result findAllByTypeAndProduct(@PathVariable("type") String type, @PathVariable("productId") String productId, @PageableDefault(sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return Result.success(tagService.findTagByTypeAndProduct(type, productId, pageable));
+    }
+    
+    
+    @RequestMapping(method = RequestMethod.GET, value = "/types")
+    public Result getTypeEnum() {
+        Map data = new HashMap<>();
+        for (TBTag.Type type : TBTag.Type.values())
+            data.put(type.getName(), type.getValue());
+        return Result.success(data);
     }
 }
