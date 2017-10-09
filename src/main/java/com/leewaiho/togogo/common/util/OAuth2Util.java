@@ -4,6 +4,7 @@ import com.leewaiho.togogo.common.Const;
 import com.leewaiho.togogo.common.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
 import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
@@ -47,6 +48,11 @@ public class OAuth2Util {
             log.error("授权失败原因：{}", e.getMessage());
             throw new ServiceException("用户不存在");
         } catch (Exception e) {
+            if (e instanceof OAuth2AccessDeniedException) {
+                OAuth2AccessDeniedException accessDeniedException = (OAuth2AccessDeniedException) e;
+                log.error("授权失败原因：{}", accessDeniedException.getMessage());
+                throw new ServiceException(Const.ServiceCode.LOGIN_FAILED);
+            }
             e.printStackTrace();
             log.error("授权失败原因：{}", e.getMessage());
             throw new ServiceException("创建token失败");

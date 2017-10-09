@@ -18,6 +18,7 @@ public class Const {
     public enum ServiceCode {
         UNKNOWED(00000, "未知状态", false), FAILED(10000, "操作失败", false),
         NOTFOUND(10001, "查找无结果", false), UNLOGIN(11000, "用户未登录", false),
+        LOGIN_FAILED(11001, "登录失败,请检查用户名或密码是否正确", false),
         UNREGISTER(11010, "用户未注册", false), BADREQUEST(10002, "参数不合法", false),
         FREQUENTLY(12001, "请求验证码过于频繁", false),
         HAD_BEEN_REGISTERD(11011, "已经被占用", false), SUCCESS(20000, "操作成功"),
