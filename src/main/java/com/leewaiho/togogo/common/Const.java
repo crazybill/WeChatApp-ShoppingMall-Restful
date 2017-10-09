@@ -62,6 +62,26 @@ public class Const {
         }
     }
     
+    
+    public enum TAG_OPTIONS_TYPE {
+        ADDPOINT("加减分", "addPoint"), COEFFICIENT("系数", "coefficient");
+        private String name;
+        private String value;
+        
+        TAG_OPTIONS_TYPE(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+    }
+    
     public static class WeChat {
         public static final String QCODE_C = "QCODE_C";
         public static final String QCODE_A = "QCODE_A";
