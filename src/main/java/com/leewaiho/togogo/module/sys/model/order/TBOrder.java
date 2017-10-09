@@ -1,6 +1,8 @@
 package com.leewaiho.togogo.module.sys.model.order;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.leewaiho.togogo.common.base.model.BaseModel;
+import com.leewaiho.togogo.common.jsonFormatter.UsernameSerializer;
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
 
 import javax.persistence.*;
@@ -28,10 +30,12 @@ public class TBOrder extends BaseModel implements Serializable {
     
     @ManyToOne
     @JoinColumn(name = "OWNER_ID", referencedColumnName = "ID")
+    @JsonSerialize(using = UsernameSerializer.class)
     private TSUser owner;
     
     @ManyToOne
     @JoinColumn(name = "PROCESSOR_ID", referencedColumnName = "ID")
+    @JsonSerialize(using = UsernameSerializer.class)
     private TSUser processor;
     
     private Date finishedTime;
