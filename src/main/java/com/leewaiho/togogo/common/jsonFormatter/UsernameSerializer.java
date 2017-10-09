@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.leewaiho.togogo.module.sys.model.user.TSUser;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Author leewaiho
@@ -17,6 +19,9 @@ import java.io.IOException;
 public class UsernameSerializer extends JsonSerializer<TSUser> {
     @Override
     public void serialize(TSUser user, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException, JsonProcessingException {
-        jsonGenerator.writeString(user.getUsername());
+        Map map = new LinkedHashMap();
+        map.put("id", user.getId());
+        map.put("username", user.getUsername());
+        jsonGenerator.writeObject(map);
     }
 }
