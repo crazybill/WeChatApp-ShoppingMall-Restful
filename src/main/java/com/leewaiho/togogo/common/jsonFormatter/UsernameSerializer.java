@@ -22,6 +22,7 @@ public class UsernameSerializer extends JsonSerializer<TSUser> {
         Map map = new LinkedHashMap();
         map.put("id", user.getId());
         map.put("username", user.getUsername());
+        map.put("mobilePhone", user.getMobilePhone());
         jsonGenerator.writeObject(map);
     }
 }
