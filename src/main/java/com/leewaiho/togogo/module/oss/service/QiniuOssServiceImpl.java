@@ -41,8 +41,7 @@ public class QiniuOssServiceImpl implements OssService {
     public String getToken(String isCreate) {
         Auth auth = Auth.create(accessKey, secretKey);
         StringMap putPolicy = new StringMap();
-        callbackUrl = callbackUrl + "?isCreate=" + isCreate;
-        putPolicy.put("callbackUrl", callbackUrl);
+        putPolicy.put("callbackUrl", callbackUrl + "?isCreate=" + isCreate);
         putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         putPolicy.put("callbackBodyType", callbackBodyType);
         String upToken = auth.uploadToken(bucket, null, expireSeconds, putPolicy);
@@ -62,7 +61,6 @@ public class QiniuOssServiceImpl implements OssService {
         if (isCreate.equalsIgnoreCase("true")) {
             TSImage image = new TSImage();
             image.setUrl(url);
-            image.setDescription("商品图片");
             image.setType("product");
             image.setSort(100);
             return imageService.save(image);
