@@ -33,7 +33,7 @@ public abstract class BaseController<T extends BaseModel> {
     }
     
     @RequestMapping(method = RequestMethod.GET)
-    public Result listPage(@PageableDefault(sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+    public Result listPage(@PageableDefault(size = 100, sort = {"sort", "id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return Result.success(service.findAll(pageable));
     }
     
