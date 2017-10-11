@@ -27,16 +27,20 @@ public class OssController {
     
     
     @RequestMapping(value = "/imageToken", method = RequestMethod.GET)
-    public Result createToken() {
+    public Result createToken(@RequestParam(value = "isCreate", required = false, defaultValue = "false") String isCreate) {
+        if (isCreate.equalsIgnoreCase("true")){
+            isCreate = "true";
+        } else {
+            isCreate = "false";
+        }
         Map result = new HashMap<>();
-        result.put("token", ossService.getToken());
+        result.put("token", ossService.getToken(isCreate));
 //        result.put("resourceUrl", resourceUrl);
         return Result.success(result);
     }
     
     @RequestMapping(value = "/upload/callback", method = RequestMethod.POST)
-    public Result callback(@RequestBody CallbackBody callbackBody, @RequestParam(value = "uid", required = false) String uid) {
-        log.info("用户ID : {}", uid);
-        return Result.success(ossService.callback(callbackBody));
+    public Result callback(@RequestBody CallbackBody callbackBody, @RequestParam(value = "isCreate", required = false, defaultValue = "false") String isCreate) {
+        return Result.success(ossService.callback(callbackBody, isCreate));
     }
 }

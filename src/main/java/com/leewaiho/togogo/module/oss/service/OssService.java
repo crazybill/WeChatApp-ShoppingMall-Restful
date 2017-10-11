@@ -10,8 +10,8 @@ import com.leewaiho.togogo.module.oss.pojo.CallbackBody;
  */
 public interface OssService {
     
-    String getToken();
+    String getToken(String isCreate);
     
-    Object callback(CallbackBody callbackBody);
+    Object callback(CallbackBody callbackBody, String isCreate);
     
 }

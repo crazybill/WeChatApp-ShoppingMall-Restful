@@ -1,11 +1,7 @@
 package com.leewaiho.togogo.module.oss.service;
 
-import com.leewaiho.togogo.common.Const.ServiceCode;
-import com.leewaiho.togogo.common.exception.ServiceException;
 import com.leewaiho.togogo.module.oss.pojo.CallbackBody;
 import com.leewaiho.togogo.module.sys.model.image.TSImage;
-import com.leewaiho.togogo.module.sys.security.SecurityUtils;
-import com.leewaiho.togogo.module.sys.security.dto.UserInfo;
 import com.leewaiho.togogo.module.sys.service.image.ImageService;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
@@ -42,14 +38,10 @@ public class QiniuOssServiceImpl implements OssService {
     @Autowired
     private ImageService imageService;
     
-    public String getToken() {
-        UserInfo user = SecurityUtils.getUser();
-        if (user != null)
-            log.info("上传者的ID: {}, 用户名:{}", user.getUser().getId(), user.getUser().getUsername());
+    public String getToken(String isCreate) {
         Auth auth = Auth.create(accessKey, secretKey);
         StringMap putPolicy = new StringMap();
-        if (user != null)
-            callbackUrl = callbackUrl + "?uid=" + user.getUser().getId();
+        callbackUrl = callbackUrl + "?isCreate=" + isCreate;
         putPolicy.put("callbackUrl", callbackUrl);
         putPolicy.put("callbackBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}");
         putPolicy.put("callbackBodyType", callbackBodyType);
@@ -64,22 +56,18 @@ public class QiniuOssServiceImpl implements OssService {
         return upToken;
     }
     
-    public Object callback(CallbackBody callbackBody) {
+    public Object callback(CallbackBody callbackBody, String isCreate) {
         String key = callbackBody.getKey();
         String url = resourceUrl + "/" + key;
-        try {
+        if (isCreate.equalsIgnoreCase("true")) {
+            TSImage image = new TSImage();
+            image.setUrl(url);
+            image.setDescription("商品图片");
+            image.setType("product");
+            image.setSort(100);
+            return imageService.save(image);
+        } else {
             return imageService.findByUrl(url);
-        } catch (ServiceException e) {
-            if (e.getCode().equals(ServiceCode.NOTFOUND)) {
-                TSImage image = new TSImage();
-                image.setUrl(url);
-                image.setDescription("商品图片");
-                image.setType("product");
-                image.setSort(100);
-                return imageService.save(image);
-            }
-            throw new ServiceException(ServiceCode.UNKNOWED, "我也不知道怎么回事,大概是在回调图片的时候发生了点错误");
         }
     }
-    
 }
