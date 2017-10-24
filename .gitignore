@@ -29,3 +29,5 @@ nbdist/
 
 ### Log
 *.log
+
+src/main/resources/application.properties
